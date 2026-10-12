@@ -1,1323 +1,268 @@
-<!doctype html>
-<html lang="bn">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>BJYM South Howrah 3 No Mondal</title>
-  <style>
-    :root {
-      --bg: #07111f;
-      --p: #101d30;
-      --l: #2d4059;
-      --t: #f7fafc;
-      --m: #aebccd;
-      --a: #ff8a00;
-    }
-    * {
-      box-sizing: border-box;
-    }
-    body {
-      margin: 0;
-      background: linear-gradient(135deg, #07111f, #0d1728);
-      color: var(--t);
-      font-family: system-ui, "Noto Sans Bengali", sans-serif;
-    }
-    header {
-      position: sticky;
-      top: 0;
-      background: #07111fee;
-      border-bottom: 1px solid var(--l);
-      z-index: 5;
-    }
-    .wrap {
-      width: min(1100px, calc(100% - 28px));
-      margin: auto;
-    }
-    .nav {
-      min-height: 68px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
-    }
-    .brand {
-      font-weight: 800;
-    }
-    .brand small {
-      display: block;
-      color: var(--m);
-      font-size: 10px;
-    }
-    .btn {
-      border: 1px solid var(--l);
-      background: #122238;
-      color: var(--t);
-      padding: 10px 14px;
-      border-radius: 10px;
-      font-weight: 700;
-      cursor: pointer;
-      text-decoration: none;
-      display: inline-block;
-    }
-    .primary {
-      background: var(--a);
-      color: #17100a;
-      border-color: var(--a);
-    }
-    main {
-      padding: 25px 0 50px;
-    }
-    .hero, .card {
-      background: linear-gradient(180deg, #101d30, #0d1829);
-      border: 1px solid var(--l);
-      border-radius: 20px;
-    }
-    .hero {
-      padding: 38px 22px;
-      background: linear-gradient(135deg, #ff8a001c, #13880812);
-    }
-    h1 {
-      font-size: clamp(34px, 7vw, 62px);
-      line-height: 1.05;
-      margin: 12px 0;
-    }
-    h2 {
-      margin: 30px 0 13px;
-    }
-    .muted {
-      color: var(--m);
-    }
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-      gap: 13px;
-    }
-    .card {
-      padding: 18px;
-    }
-    .avatar {
-      width: 58px;
-      height: 58px;
-      border-radius: 50%;
-      display: grid;
-      place-items: center;
-      background: #17283e;
-      border: 1px solid #4b617d;
-      font-weight: 900;
-      font-size: 20px;
-      margin-bottom: 15px;
-    }
-    .role {
-      color: #ffb65a;
-      font-weight: 700;
-      font-size: 14px;
-    }
-    form {
-      display: grid;
-      gap: 8px;
-    }
-    input, textarea {
-      width: 100%;
-      padding: 12px;
-      border-radius: 10px;
-      border: 1px solid var(--l);
-      background: #07111f;
-      color: var(--t);
-      font: inherit;
-      font-size: 16px;
-    }
-    textarea {
-      min-height: 120px;
-    }
-    .actions {
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-      margin-top: 6px;
-    }
-    .empty {
-      color: var(--m);
-    }
-    .admin {
-      display: none;
-    }
-    .admin.show {
-      display: block;
-    }
-    dialog {
-      border: 1px solid var(--l);
-      border-radius: 18px;
-      background: var(--p);
-      color: var(--t);
-      width: min(420px, calc(100% - 28px));
-      padding: 22px;
-    }
-    dialog::backdrop {
-      background: #000b;
-    }
-    .close {
-      float: right;
-      background: none;
-      border: 0;
-      color: var(--m);
-      font-size: 25px;
-      cursor: pointer;
-    }
-    .status {
-      min-height: 22px;
-      color: var(--m);
-    }
-    footer {
-      border-top: 1px solid var(--l);
-      padding: 24px 0;
-      color: var(--m);
-      font-size: 13px;
-    }
-    .impact-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 13px;
-    }
-    .impact-card {
-      text-align: center;
-      background: linear-gradient(135deg, #ff8a0022, #13880822);
-      border: 1px solid #ff9b3d55;
-    }
-    .impact-number {
-      font-size: 34px;
-      font-weight: 900;
-      color: #ffb65a;
-    }
-    .ticker {
-      overflow: hidden;
-      white-space: nowrap;
-      border: 1px solid #ff8a0055;
-      border-radius: 12px;
-      background: #ff8a0012;
-      padding: 10px;
-    }
-    .ticker span {
-      display: inline-block;
-      padding-left: 100%;
-      animation: ticker 22s linear infinite;
-    }
-    @keyframes ticker {
-      to { transform: translateX(-100%); }
-    }
-    .rank-grid {
-      display: grid;
-      gap: 10px;
-    }
-    .rank {
-      display: grid;
-      grid-template-columns: 48px 58px 1fr auto;
-      align-items: center;
-      gap: 10px;
-      padding: 12px;
-      border: 1px solid var(--l);
-      border-radius: 14px;
-      background: #ffffff05;
-      transition: .25s;
-    }
-    .rank:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 0 22px #ff8a0033;
-    }
-    .rank img, .leader-photo {
-      width: 58px;
-      height: 58px;
-      border-radius: 50%;
-      object-fit: cover;
-      border: 2px solid #ffb65a;
-    }
-    .badge {
-      font-weight: 900;
-      font-size: 20px;
-    }
-    .points {
-      font-weight: 900;
-      color: #ffb65a;
-    }
-    .feed {
-      display: grid;
-      gap: 12px;
-    }
-    .feed img {
-      width: 100%;
-      max-height: 330px;
-      object-fit: cover;
-      border-radius: 14px;
-    }
-    .release-list, .social-list {
-      display: grid;
-      gap: 12px;
-    }
-    .release-card, .social-card {
-      position: relative;
-      overflow: hidden;
-    }
-    .release-card h3, .social-card h3 {
-      margin-top: 0;
-    }
-    .social-video {
-      width: 100%;
-      aspect-ratio: 16/9;
-      border: 0;
-      border-radius: 14px;
-      background: #000;
-    }
-    .social-link {
-      display: inline-flex;
-      align-items: center;
-      gap: 7px;
-    }
-    .admin-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 12px;
-    }
-    .danger {
-      background: #3a1414;
-      border-color: #7d3030;
-    }
-    .small {
-      font-size: 12px;
-    }
-    .poll-grid {
-      display: grid;
-      gap: 12px;
-    }
-    .poll-option {
-      width: 100%;
-      text-align: left;
-    }
-    .poll-option[disabled] {
-      opacity: .55;
-      cursor: not-allowed;
-    }
-    .vol-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 12px;
-    }
-    .idea-box, .poll-box, .vol-box {
-      background: linear-gradient(135deg, #ff8a0014, #13880812);
-    }
-    .mini {
-      font-size: 12px;
-      color: var(--m);
-    }
-    .result-bar {
-      height: 8px;
-      border-radius: 99px;
-      background: #26384e;
-      overflow: hidden;
-      margin-top: 6px;
-    }
-    .result-bar i {
-      display: block;
-      height: 100%;
-      background: linear-gradient(90deg, #ff8a00, #138808);
-      width: var(--w);
-    }
-    .leader-photo-wrap {
-      width: 72px;
-      height: 72px;
-      border-radius: 50%;
-      display: grid;
-      place-items: center;
-      flex: none;
-      overflow: hidden;
-      background: #17283e;
-      border: 2px solid #ffb65a;
-    }
-    .leader-photo-wrap img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-    }
-    .leader-fallback {
-      font-weight: 900;
-      font-size: 20px;
-      color: #fff;
-    }
-    .bio {
-      color: var(--m);
-      font-size: 13px;
-      line-height: 1.6;
-      margin-top: 8px;
-    }
-    .photo-actions {
-      display: flex;
-      gap: 7px;
-      flex-wrap: wrap;
-      margin-top: 8px;
-    }
-    .photo-preview {
-      width: 96px;
-      height: 96px;
-      border-radius: 16px;
-      object-fit: cover;
-      border: 2px solid #ffb65a;
-      background: #17283e;
-    }
-    .admin-edit-card {
-      border: 1px solid #ff8a0055 !important;
-    }
-    .impact-admin-row {
-      display: grid;
-      grid-template-columns: 1fr 90px 90px auto;
-      gap: 8px;
-      align-items: center;
-      margin-top: 8px;
-    }
+<!doctype html><html lang="bn"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>BJYM South Howrah Mondal 3 | Official Portal</title><meta name="description" content="ভারতীয় জনতা যুব মোর্চা দক্ষিণ হাওড়া ৩ নম্বর মণ্ডলের অফিসিয়াল তথ্য, কর্মসূচি, নোটিশ, ছবি গ্যালারি ও সামাজিক মাধ্যম।"><meta name="keywords" content="BJYM South Howrah Mandal 3, দক্ষিণ হাওড়া ৩ নম্বর মণ্ডল যুব মোর্চা"><style>
+:root{--bg:#fffaf3;--p:#ffffff;--l:#e7d9c8;--t:#20251f;--m:#5d685f;--a:#FF6600;--g:#0D592B}*{box-sizing:border-box}body{margin:0;background:linear-gradient(135deg,#fff8ed 0%,#ffffff 52%,#edf7ef 100%);color:var(--t);font-family:system-ui,"Noto Sans Bengali",sans-serif}header{position:sticky;top:0;background:#ffffffed;border-bottom:3px solid transparent;border-image:linear-gradient(90deg,#FF6600 0 40%,#ffffff 40% 60%,#0D592B 60%) 1;z-index:5;backdrop-filter:blur(12px)}.wrap{width:min(1100px,calc(100% - 28px));margin:auto}.nav{min-height:68px;display:flex;align-items:center;justify-content:space-between;gap:10px}.brand{font-weight:800}.brand small{display:block;color:var(--m);font-size:10px}.btn{border:1px solid var(--l);background:#ffffff;color:var(--t);padding:10px 14px;border-radius:10px;font-weight:700;cursor:pointer}.primary{background:var(--a);color:#17100a;border-color:var(--a)}main{padding:25px 0 50px}.hero,.card{background:linear-gradient(145deg,#ffffff,#fffaf3);border:1px solid var(--l);border-radius:20px;box-shadow:0 8px 26px #9b6c3010}.hero{padding:38px 22px;background:linear-gradient(120deg,#FF660018,#ffffff 48%,#0D592B16)}h1{font-size:clamp(34px,7vw,62px);line-height:1.05;margin:12px 0}h2{margin:30px 0 13px}.muted{color:var(--m)}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:13px}.card{padding:18px}.avatar{width:58px;height:58px;border-radius:50%;display:grid;place-items:center;background:#17283e;border:1px solid #4b617d;font-weight:900;font-size:20px;margin-bottom:15px}.role{color:#ffb65a;font-weight:700;font-size:14px}form{display:grid;gap:8px}input,textarea{width:100%;padding:12px;border-radius:10px;border:1px solid var(--l);background:#ffffff;color:var(--t);font:inherit;font-size:16px}textarea{min-height:120px}.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px}.empty{color:var(--m)}.admin{display:none}.admin.show{display:block}dialog{border:1px solid var(--l);border-radius:18px;background:var(--p);color:var(--t);width:min(420px,calc(100% - 28px));padding:22px}dialog::backdrop{background:#000b}.close{float:right;background:none;border:0;color:var(--m);font-size:25px;cursor:pointer}.status{min-height:22px;color:var(--m)}footer{border-top:1px solid var(--l);padding:24px 0;color:var(--m);font-size:13px}@media(max-width:650px){.hero{padding:30px 18px}.grid{grid-template-columns:1fr}.nav{align-items:flex-start;flex-direction:column;padding:10px 0}.page-nav{justify-content:flex-start;overflow-x:auto;max-width:100%;flex-wrap:nowrap}.page-nav .btn{white-space:nowrap;flex:none}}
 
-    @media(max-width: 700px) {
-      .impact-grid {
-        grid-template-columns: 1fr;
-      }
-      .rank {
-        grid-template-columns: 34px 48px 1fr;
-      }
-      .rank .points {
-        grid-column: 3;
-      }
-      .rank img {
-        width: 48px;
-        height: 48px;
-      }
-      .impact-admin-row {
-        grid-template-columns: 1fr 1fr;
-      }
-      .impact-admin-row button {
-        grid-column: 1 / -1;
-      }
-      .photo-preview {
-        width: 76px;
-        height: 76px;
-      }
-    }
-    @media(max-width: 650px) {
-      nav {
-        display: none;
-      }
-      .hero {
-        padding: 30px 18px;
-      }
-      .grid {
-        grid-template-columns: 1fr;
-      }
-    }
-  </style>
-</head>
-<body>
+.impact-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:13px}.impact-card{text-align:center;background:linear-gradient(135deg,#ff8a0022,#13880822);border:1px solid #ff9b3d55}.impact-number{font-size:34px;font-weight:900;color:#ffb65a}.ticker{overflow:hidden;white-space:nowrap;border:1px solid #ff8a0055;border-radius:12px;background:#ff8a0012;padding:10px}.ticker span{display:inline-block;padding-left:100%;animation:ticker 22s linear infinite}@keyframes ticker{to{transform:translateX(-100%)}}.rank-grid{display:grid;gap:10px}.rank{display:grid;grid-template-columns:48px 58px 1fr auto;align-items:center;gap:10px;padding:12px;border:1px solid var(--l);border-radius:14px;background:#ffffff05;transition:.25s}.rank:hover{transform:translateY(-2px);box-shadow:0 0 22px #ff8a0033}.rank img,.leader-photo{width:58px;height:58px;border-radius:50%;object-fit:cover;border:2px solid #ffb65a}.badge{font-weight:900;font-size:20px}.points{font-weight:900;color:#ffb65a}.feed{display:grid;gap:12px}.feed img{width:100%;max-height:330px;object-fit:cover;border-radius:14px}.release-list,.social-list{display:grid;gap:12px}.release-card,.social-card{position:relative;overflow:hidden}.release-card h3,.social-card h3{margin-top:0}.social-video{width:100%;aspect-ratio:16/9;border:0;border-radius:14px;background:#000}.social-link{display:inline-flex;align-items:center;gap:7px}.admin-grid{grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}.admin-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}.danger{background:#3a1414;border-color:#7d3030}.small{font-size:12px}@media(max-width:700px){.impact-grid{grid-template-columns:1fr}.rank{grid-template-columns:34px 48px 1fr}.rank .points{grid-column:3}.rank img{width:48px;height:48px}}
+<style>.poll-grid{display:grid;gap:12px}.poll-option{width:100%;text-align:left}.poll-option[disabled]{opacity:.55;cursor:not-allowed}.vol-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}.idea-box,.poll-box,.vol-box{background:linear-gradient(135deg,#ff8a0014,#13880812)}.mini{font-size:12px;color:var(--m)}.result-bar{height:8px;border-radius:99px;background:#26384e;overflow:hidden;margin-top:6px}.result-bar i{display:block;height:100%;background:linear-gradient(90deg,#ff8a00,#138808);width:var(--w)} 
+.scheme-card h3{font-size:1.12rem;line-height:1.45;margin-bottom:8px}.scheme-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.scheme-actions .btn{flex:1;min-width:130px;text-align:center;justify-content:center}.scheme-tag{font-size:11px;color:#0d592b;font-weight:800;background:#eaf6ed;padding:4px 8px;border-radius:999px;display:inline-block;margin-bottom:8px}.scheme-disclaimer{font-size:12px;color:var(--m);margin-top:8px}.scheme-frame-modal{position:fixed;inset:0;background:rgba(0,0,0,.78);z-index:99999;display:none;padding:12px;align-items:center;justify-content:center}.scheme-frame-modal.open{display:flex}.scheme-frame-panel{width:min(1100px,100%);height:min(88vh,900px);background:#fff;border-radius:14px;overflow:hidden;display:flex;flex-direction:column}.scheme-frame-head{display:flex;align-items:center;gap:12px;padding:10px 14px;background:#10231a;color:#fff}.scheme-frame-head strong{flex:1}.scheme-frame-head button{border:0;border-radius:8px;padding:8px 12px;font-weight:800}.scheme-frame-panel iframe{border:0;width:100%;height:100%;flex:1}.scheme-frame-note{font-size:12px;padding:7px 12px;background:#fff4e8;color:#51351b}@media(max-width:600px){.scheme-actions{flex-direction:column}.scheme-actions .btn{width:100%;min-height:44px}.scheme-frame-modal{padding:5px}.scheme-frame-panel{height:94vh;border-radius:10px}}
+</style></style>
+<style>
+/* Organized page + media viewer */
+.page-nav{display:flex;gap:7px;flex-wrap:wrap;align-items:center;justify-content:flex-end}
+.page-nav .btn{padding:8px 11px;font-size:13px}
+.view{display:none}
+.view.active{display:block}
+.section-intro{margin:0 0 14px;color:var(--m)}
+.media-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px}
+.media-tile{padding:0;overflow:hidden;cursor:pointer;position:relative}
+.media-tile img{display:block;width:100%;height:220px;object-fit:cover}
+.media-tile .media-caption{padding:11px 13px}
+.media-only-grid .media-tile img{height:260px}
+.social-post-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:15px}.fb-embed{width:100%;height:450px;border:0;border-radius:14px;background:#000}.preloader{position:fixed;inset:0;z-index:99;display:grid;place-items:center;background:#07111f;transition:opacity .35s,visibility .35s}.preloader.done{opacity:0;visibility:hidden}.loader-mark{width:76px;height:76px;border-radius:50%;border:5px solid #ffffff22;border-top-color:#FF6600;border-bottom-color:#0D592B;animation:spin .8s linear infinite;display:grid;place-items:center;font-weight:900;color:#fff}.loader-label{margin-top:14px;text-align:center;font-weight:800;letter-spacing:.08em}@keyframes spin{to{transform:rotate(360deg)}}.hero{position:relative;overflow:hidden;background:linear-gradient(120deg,#FF660033,#0D592B33),linear-gradient(135deg,#101d30,#0d1829)}.hero:after{content:"";position:absolute;inset:auto -10% -65% 45%;height:250px;background:linear-gradient(90deg,#FF660044,#0D592B44);filter:blur(50px);pointer-events:none}.hero .actions{position:relative;z-index:1}
+.social-post{overflow:hidden}
+.social-post .social-thumb{display:block;width:100%;max-height:520px;object-fit:cover;cursor:pointer}
+.social-post .social-body{padding:16px}
+.release-grid{display:grid;gap:14px}
+.release-card{cursor:pointer}
+.release-card .release-preview{width:100%;height:180px;object-fit:cover;border-radius:12px;margin:10px 0}
+.view-back{margin-bottom:12px}
+#viewerDialog{width:min(1000px,calc(100% - 20px));max-width:1000px;padding:12px;background:#07111f;border:1px solid var(--l)}
+#viewerDialog .viewer-head{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:6px 4px 12px}
+#viewerDialog .viewer-title{font-weight:800}
+#viewerDialog .viewer-body{background:#000;border-radius:14px;min-height:55vh;display:grid;place-items:center;overflow:hidden}
+#viewerDialog .viewer-body img{max-width:100%;max-height:78vh;object-fit:contain}
+#viewerDialog .viewer-body iframe{width:100%;height:78vh;border:0;background:#fff}
+#viewerDialog .viewer-actions{display:flex;gap:8px;justify-content:flex-end;padding-top:10px;flex-wrap:wrap}
+@media(max-width:650px){
+ .page-nav{width:100%}
+ .page-nav .btn{flex:1}
+ .media-only-grid .media-tile img{height:210px}
+ #viewerDialog .viewer-body iframe{height:70vh}
+}
 
-<header>
-  <div class="wrap nav">
-    <div class="brand">
-      BJYM • SOUTH HOWRAH 3 NO MONDAL
-      <small>OFFICIAL ORGANIZATIONAL PORTAL</small>
-    </div>
-    <button class="btn primary" id="adminBtn">ADMIN</button>
-  </div>
-</header>
+.ticker-dock{background:#091522;border-bottom:1px solid var(--l);padding:9px 0 7px}.ticker-shell{display:grid;grid-template-columns:auto 1fr;gap:10px;align-items:center}.ticker-label{color:#fff;background:#b91c1c;padding:8px 10px;border-radius:8px;font-size:12px;white-space:nowrap}.ticker-dock .ticker{border:0;border-radius:0;padding:8px 0;background:transparent}.ticker-dock .ticker span{animation-duration:28s}.news-links{display:flex;align-items:center;gap:12px;overflow-x:auto;white-space:nowrap;font-size:12px;padding-top:5px;color:var(--m)}.news-links a{color:#ffbd85;text-decoration:none}.news-links a:hover{text-decoration:underline}.ticker-dock{position:relative;z-index:4;background:linear-gradient(90deg,#fff0df,#ffffff 48%,#edf7ef);border-bottom:1px solid #d6e3d8}.ticker-dock .ticker-label{background:#b42318}.headline-dock{background:linear-gradient(90deg,#fff4e8,#fff 48%,#eaf6ed);border-bottom:1px solid #e5d7c8;padding:8px 0 10px}.headline-shell{display:grid;grid-template-columns:auto 1fr;gap:10px;align-items:center}.headline-label{font-size:12px;font-weight:900;white-space:nowrap;color:#fff;background:linear-gradient(90deg,#FF6600,#0D592B);padding:8px 10px;border-radius:8px}.headline-track{overflow:hidden;white-space:nowrap;border:1px solid #d8e5da;border-radius:10px;background:#fff;padding:10px 0}.headline-track span{display:inline-block;padding-left:100%;animation:headlineRun 18s linear infinite;color:#263a2b;font-weight:700}.headline-track:hover span{animation-play-state:paused}.headline-track a{color:#0D592B;text-decoration:none;margin:0 28px}.headline-track a:hover{text-decoration:underline}.headline-note{font-size:11px;color:#647067;margin-top:4px}@keyframes headlineRun{to{transform:translateX(-100%)}}select{width:100%;padding:12px;border-radius:10px;border:1px solid var(--l);background:#ffffff;color:var(--t);font:inherit;font-size:16px}
+@media(max-width:650px){.ticker-shell,.headline-shell{grid-template-columns:1fr;gap:4px}.ticker-label,.headline-label{justify-self:start}.ticker-dock .ticker{padding:4px 0}.headline-track{font-size:13px}}
 
+/* FINAL responsive usability pass */
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}body{overflow-wrap:anywhere}img,iframe,video{max-width:100%}.wrap{width:min(1100px,calc(100% - 24px))}.hero{background:linear-gradient(120deg,#102a25,#10212b 62%,#133b2b);color:#fff}.hero .muted{color:#e1eee6}.hero h1{color:#fff;font-size:clamp(27px,5vw,48px);line-height:1.18;letter-spacing:-.02em}.hero p{font-size:clamp(14px,2vw,17px);line-height:1.65;max-width:760px}.headline-dock{padding:7px 0}.headline-shell{grid-template-columns:auto minmax(0,1fr)}.headline-label{font-size:12px}.headline-track{min-width:0;padding:8px 0}.headline-track span{animation-duration:18s!important;font-size:14px}.headline-track a{margin:0 14px}.ticker span{animation-duration:18s}.news-links{font-size:12px}.scheme-card h3,.job-card h3{font-size:clamp(18px,2.5vw,23px);line-height:1.3}.info-link{display:inline-flex;align-items:center;justify-content:center;min-height:42px}.quick-links{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.quick-links a{display:block;padding:13px;border:1px solid var(--l);border-radius:12px;text-decoration:none;color:var(--t);background:#fff;font-weight:700}
+@media(max-width:650px){.wrap{width:calc(100% - 20px)}main{padding:14px 0 32px}.hero{padding:22px 16px;border-radius:16px}.hero h1{font-size:clamp(25px,7.2vw,34px);line-height:1.22;margin:10px 0}.hero p{font-size:14px;line-height:1.6}.actions{display:grid;grid-template-columns:1fr;gap:8px}.actions .btn,.btn{min-height:42px;font-size:14px}.page-nav{width:100%;gap:6px}.page-nav .btn{padding:9px 11px;font-size:12px}.headline-shell{grid-template-columns:1fr;gap:6px}.headline-label{font-size:11px;padding:6px 9px}.headline-track{font-size:12px}.headline-track span{font-size:12px;animation-duration:14s!important}.headline-track a{margin:0 10px}.ticker-shell{grid-template-columns:auto minmax(0,1fr);gap:7px}.ticker-label{font-size:10px;padding:7px}.ticker{min-width:0}.ticker span{animation-duration:14s}.news-links{padding-bottom:4px}h2{font-size:20px;margin:23px 0 10px}.card{padding:14px}.impact-grid{grid-template-columns:1fr}.quick-links{grid-template-columns:1fr}.rank{grid-template-columns:30px 44px minmax(0,1fr);gap:7px}.rank img{width:44px;height:44px}.rank .points{grid-column:3}.release-grid,.social-post-grid,.vol-grid{grid-template-columns:1fr}#president-contact{padding:18px 12px!important}input,textarea,select{font-size:16px}.headline-track:hover span{animation-play-state:running}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.headline-track span,.ticker span{animation-duration:35s!important}}
+</style></head><body>
+<div class="preloader" id="preloader"><div><div class="loader-mark">BJYM</div><div class="loader-label">SOUTH HOWRAH MONDAL 3</div></div></div>
+<header><div class="wrap nav"><div class="brand">BJYM • SOUTH HOWRAH 3 NO MONDAL<small>OFFICIAL ORGANIZATIONAL PORTAL</small></div><div class="page-nav"><button class="btn primary" data-view="homeView">হোম</button><button class="btn" data-view="mediaView">🖼️ গ্যালারি</button><button class="btn" data-view="documentsView">📄 নোটিশ / PDF</button><button class="btn" data-view="socialView">📱 Social Media</button><button class="btn" id="adminBtn">ADMIN</button></div></div></header>
+<section class="ticker-dock"><div class="wrap ticker-shell"><b class="ticker-label">🔴 LIVE UPDATE</b><div class="ticker"><span id="tickerText">মণ্ডলের জরুরি ঘোষণা ও কর্মসূচির আপডেট এখানে দেখুন…</span></div></div><div class="wrap news-links"><span>সংবাদসূত্র:</span><a href="https://pib.gov.in/" target="_blank" rel="noopener">PIB</a><a href="https://www.ddnews.gov.in/" target="_blank" rel="noopener">DD News</a><a href="https://www.ani.in/" target="_blank" rel="noopener">ANI</a><a href="https://www.bbc.com/bengali" target="_blank" rel="noopener">BBC বাংলা</a><a href="https://www.anandabazar.com/" target="_blank" rel="noopener">আনন্দবাজার</a></div></section>
+<section class="headline-dock" aria-label="সংবাদ শিরোনাম"><div class="wrap headline-shell"><b class="headline-label">📰 আজকের সংবাদ শিরোনাম</b><div><div class="headline-track"><span><a href="https://bengali.indianexpress.com/west-bengal/west-bengal-police-recruitment-11000-jobs-puja-2026-suvendu-adhikari-12668040" target="_blank" rel="noopener">পশ্চিমবঙ্গ: পুলিশ বিভাগে নিয়োগ সংক্রান্ত সাম্প্রতিক ঘোষণা — Indian Express বাংলা</a><a href="https://m.economictimes.com/news/india/west-bengal-cm-announces-record-police-constable-appointments-ahead-of-durga-pujas-and-plans-for-future-recruitment/articleshow/134896560.cms" target="_blank" rel="noopener">পুলিশ কনস্টেবল নিয়োগ ও ভবিষ্যৎ নিয়োগ পরিকল্পনা — Economic Times</a><a href="https://www.pmindia.gov.in/en/news_updates/under-20th-rozgar-mela-pm-to-distribute-more-than-51000-appointment-letters-to-the-newly-appointed-youth-in-government-on-19-september/" target="_blank" rel="noopener">রোজগার মেলা: ৫১ হাজারের বেশি নিয়োগপত্র বিতরণের ঘোষণা — PM India</a><a href="https://www.pmindia.gov.in/en/news-updates/?sort=latest" target="_blank" rel="noopener">প্রধানমন্ত্রীর দপ্তরের সর্বশেষ সরকারি আপডেট — PM India</a><a href="https://employmentnews.gov.in/newemp/Home.aspx?job_highlight=0" target="_blank" rel="noopener">সরকারি চাকরির বিজ্ঞপ্তি ও আবেদনের শেষ তারিখ — Employment News</a></span></div></div></div></section>
 <main class="wrap">
-  <section class="hero">
-    <div class="muted">দক্ষিণ হাওড়া • ৩ নম্বর মণ্ডল</div>
-    <h1>ভারতীয় জনতা যুব মোর্চা</h1>
-    <p class="muted">সমাজসেবা, স্থানীয় সহায়তা, জনসাধারণের তথ্য এবং সাংগঠনিক কার্যক্রমের ডিজিটাল পোর্টাল।</p>
-    <div class="actions">
-      <a class="btn primary" href="#leaderboard">লাইভ সেবা লিডারবোর্ড</a>
-      <a class="btn" href="#activityFeed">অ্যাক্টিভিটি ফিড</a>
-    </div>
-  </section>
+<section id="homeView" class="view active">
+  <section class="hero"><div class="muted">দক্ষিণ হাওড়া • ৩ নম্বর মণ্ডল</div><h1>নতুন ও শক্তিশালী দক্ষিণ হাওড়া গড়ার অঙ্গীকার</h1><p class="muted">ভারতীয় জনতা যুব মোর্চা দক্ষিণ হাওড়া ৩ নম্বর মণ্ডল — সমাজসেবা, সংগঠন ও জনসংযোগের ডিজিটাল পোর্টাল।</p><div class="actions"><button class="btn primary" data-view="documentsView">📅 আগামী কর্মসূচী ও নোটিশ</button><button class="btn" data-view="mediaView">🖼️ ছবি গ্যালারি</button><button class="btn" data-view="socialView">▶️ Facebook Live / Social</button></div></section>
+  <section><h2>লাইভ ইমপ্যাক্ট</h2><div class="impact-grid" id="impactGrid"></div></section>
+  <section id="leaders"><h2>নেতৃত্ব</h2><div class="grid" id="leadersGrid"></div></section>
+  <section><h2>মণ্ডল নেতৃত্ব</h2><div class="grid" id="mondalGrid"></div></section>
+  <section><h2>🏆 Top Social Warriors</h2><div class="card" id="monthlyWinner"><div class="empty">মাসিক সেরা সেবক লোড হচ্ছে…</div></div><div class="rank-grid" id="leaderboardList" style="margin-top:12px"></div></section>
+  <section><h2>📅 Upcoming Social Drives</h2><div id="eventsList"><div class="card empty">বর্তমানে কোনও কর্মসূচি প্রকাশিত নেই। নতুন কর্মসূচি প্রকাশিত হলে এখানে তারিখ, স্থান ও বিবরণ দেখা যাবে।</div></div></section>
+  <section><h2>🚨 Local Emergency Contacts</h2><div class="grid" id="contactsGrid"><div class="card empty">জরুরি যোগাযোগের তথ্য প্রস্তুত হচ্ছে…</div></div></section>
+  <section><h2>🏛️ সরকারি কল্যাণ প্রকল্প সহায়িকা</h2><div class="grid" id="schemesGrid"><div class="card empty">সরকারি প্রকল্পের তথ্য প্রস্তুত হচ্ছে…</div></div></section>
+  <section><h2>🪷 অনুপ্রেরণা</h2><div class="grid" id="quotesGrid"><div class="card empty">অনুপ্রেরণামূলক লেখা প্রস্তুত হচ্ছে…</div></div></section>
+  <section id="polls"><h2>🗳️ Surveys & Opinion Polls</h2><p class="muted">নতুন সিদ্ধান্ত, কার্যক্রম বা স্থানীয় মতামত বিষয়ে ওয়ান-ক্লিক ভোট দিন।</p><div class="poll-grid" id="pollList"><div class="card empty">Poll লোড হচ্ছে…</div></div></section>
+  <section id="volunteers"><h2>🤝 Micro-Volunteering</h2><p class="muted">ছোট সামাজিক কাজ বা স্বেচ্ছাসেবী উদ্যোগে অংশ নিতে একটি কাজ বেছে নিন।</p><div class="vol-grid" id="volunteerList"><div class="card empty">Volunteer opportunities লোড হচ্ছে…</div></div></section>
+  <section id="ideas"><h2>💡 Share Ideas — Direct Feedback Portal</h2><p class="muted">অ্যাডমিন/ম্যানেজমেন্টের কাছে সরাসরি আইডিয়া, পরামর্শ বা feedback পাঠানোর জায়গা।</p><form class="card idea-box" id="ideaForm"><input id="ideaName" maxlength="80" placeholder="আপনার নাম (ঐচ্ছিক)"><input id="ideaContact" maxlength="120" placeholder="Phone / Email (ঐচ্ছিক)"><input id="ideaSubject" maxlength="160" placeholder="বিষয়ের নাম" required><textarea id="ideaMessage" maxlength="5000" placeholder="আপনার আইডিয়া বা পরামর্শ লিখুন…" required></textarea><button class="btn primary" type="submit">📨 সরাসরি পাঠান</button><div id="ideaStatus" class="status"></div></form></section>
+  <section id="grievance"><h2>🛟 অনলাইন অভিযোগ ও পরামর্শ সেল</h2><p class="muted">রাস্তাঘাট, পানীয় জল, নিকাশি বা অন্য স্থানীয় সমস্যা জানাতে ফর্মটি পূরণ করুন। আপনার এলাকা/ওয়ার্ডের তথ্য অ্যাডমিন ইনবক্সে পাঠানো হবে।</p><form class="card idea-box" id="grievanceForm"><input id="grievanceName" maxlength="80" placeholder="আপনার নাম (ঐচ্ছিক)"><input id="grievancePhone" maxlength="30" placeholder="মোবাইল নম্বর / যোগাযোগ (ঐচ্ছিক)"><div class="grid"><div><label for="grievanceWard">ওয়ার্ড নম্বর</label><input id="grievanceWard" maxlength="30" placeholder="যেমন: Ward 12" required></div><div><label for="grievanceArea">এলাকা</label><input id="grievanceArea" maxlength="100" placeholder="এলাকার নাম" required></div></div><label for="grievanceCategory">সমস্যার বিভাগ</label><select id="grievanceCategory" required><option value="">বিভাগ নির্বাচন করুন</option><option>রাস্তাঘাট</option><option>পানীয় জল</option><option>নিকাশি / জল জমা</option><option>আলো / বিদ্যুৎ</option><option>সরকারি প্রকল্পের সহায়তা</option><option>অন্যান্য স্থানীয় সমস্যা</option></select><label for="grievanceDetails">সমস্যার বিবরণ</label><textarea id="grievanceDetails" maxlength="5000" placeholder="সমস্যাটি সংক্ষেপে লিখুন…" required></textarea><button class="btn primary" type="submit">📨 অভিযোগ জমা দিন</button><div id="grievanceStatus" class="status" aria-live="polite"></div><p class="mini">দয়া করে OTP, ব্যাঙ্কের তথ্য বা অন্য সংবেদনশীল তথ্য লিখবেন না।</p></form></section>
+  <section id="posts"><h2>জনসাধারণের পোস্ট</h2><form class="card" id="postForm"><label>পরিচিতি / Display Name</label><input id="displayName" maxlength="80" required><label>বার্তা</label><textarea id="message" maxlength="5000" required></textarea><button class="btn primary" type="submit">বার্তা জমা দিন</button><div id="postStatus" class="status"></div></form><div id="postsList" style="margin-top:12px"></div></section>
+  <section id="president-contact" class="card" style="margin:24px 0;padding:24px;border-radius:22px;background:linear-gradient(135deg,rgba(255,153,0,.14),rgba(19,136,8,.12));border:1px solid rgba(255,153,0,.35);box-shadow:0 12px 35px rgba(0,0,0,.18);text-align:center"><h2 style="margin:0 0 8px">📞 সরাসরি সভাপতির সঙ্গে যোগাযোগ</h2><div style="font-size:1.15rem;font-weight:800">শ্রী কৃষ্ণেন্দু পোল্ল্যে (সঞ্জু)</div><div style="font-size:.88rem;opacity:.78;margin:4px 0 16px">ভারতীয় জনতা যুব মোর্চার সভাপতি — সরাসরি যোগাযোগের মাধ্যম</div><div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap"><a href="tel:+917003935754" style="padding:11px 18px;border-radius:12px;text-decoration:none;font-weight:800;background:rgba(2,132,199,.18);color:inherit">📱 +91 7003935754</a><a href="mailto:polleysanju@gmail.com" style="padding:11px 18px;border-radius:12px;text-decoration:none;font-weight:800;background:rgba(236,72,153,.14);color:inherit">✉️ polleysanju@gmail.com</a></div><div style="margin-top:18px;font-size:.9rem;line-height:1.7"><b>অঞ্চল:</b> Duiliya, Jhorehat, Panchpara, Thanamakua<br><b>অফিস:</b> Basudevpur, Jhorehat, Howrah-711304</div></section>
+</section>
 
-  <section>
-    <h2>লাইভ ইমপ্যাক্ট</h2>
-    <div class="impact-grid" id="impactGrid"></div>
-  </section>
+<section id="mediaView" class="view">
+  <div class="view-back"><button class="btn" data-view="homeView">← তথ্যের মূল পেজে ফিরুন</button></div>
+  <h2>🖼️ মিডিয়া / গ্যালারি</h2>
+  <p class="section-intro">এখানে শুধু ছবি/মিডিয়া গ্যালারি থাকবে। ছবিতে ক্লিক করলে বড় করে দেখা যাবে।</p>
+  <div class="media-grid media-only-grid" id="mediaGallery"><div class="card empty">মিডিয়া লোড হচ্ছে…</div></div>
+</section>
 
-  <section>
-    <div class="ticker">
-      <span id="tickerText">সমাজসেবামূলক কার্যক্রমের আপডেট লোড হচ্ছে…</span>
-    </div>
-  </section>
+<section id="documentsView" class="view">
+  <div class="view-back"><button class="btn" data-view="homeView">← মূল পেজে ফিরুন</button></div>
+  <h2>📄 অফিসিয়াল নোটিশ ও ডকুমেন্ট</h2>
+  <p class="section-intro">PDF ও সমর্থিত ডকুমেন্ট এই পেজের ভিউয়ারের মধ্যে পড়ুন। ছবি-ভিত্তিক গ্যালারি আলাদা রাখা হয়েছে।</p>
+  <div class="release-grid" id="releaseList"><div class="card empty">প্রকাশনা লোড হচ্ছে…</div></div>
+</section>
 
-  <section id="leaderboard">
-    <h2>🏆 Top Social Warriors</h2>
-    <div class="card" id="monthlyWinner">
-      <div class="empty">মাসিক সেরা সেবক লোড হচ্ছে…</div>
-    </div>
-    <div class="rank-grid" id="leaderboardList" style="margin-top:12px"></div>
-  </section>
+<section id="socialView" class="view">
+  <div class="view-back"><button class="btn" data-view="homeView">← তথ্যের মূল পেজে ফিরুন</button></div>
+  <h2>📱 Social Media Corner</h2>
+  <p class="section-intro">এই পেজে শুধু Facebook / Social Media posts, Live ও video updates থাকবে।</p>
+  <div class="social-post-grid" id="socialMediaList"><div class="card empty">Social Media লোড হচ্ছে…</div></div>
+</section>
 
-  <section id="releases">
-    <h2>📢 প্রকাশনা / Releases</h2>
-    <p class="muted">ভবিষ্যতে আমাদের পক্ষ থেকে প্রকাশিত গুরুত্বপূর্ণ ঘোষণা, নোটিশ, আপডেট ও ডকুমেন্ট এখানে সবাই দেখতে পারবেন।</p>
-    <div class="release-list" id="releaseList">
-      <div class="card empty">প্রকাশনা লোড হচ্ছে…</div>
-    </div>
-  </section>
+<section class="admin" id="adminPanel"><h2>⚙️ Admin Control Center</h2><div class="card"><b>Admin mode active</b><p class="muted">এখান থেকেই leadership photo, worker, activity verification, points, ticker ও social-drive content পরিচালনা করা যাবে।</p><div class="actions"><button class="btn" id="refreshBtn">Refresh</button><button class="btn" id="logoutBtn">Logout</button></div><div id="adminStatus" class="status"></div></div>
+<div class="admin-grid" style="margin-top:12px">
+<div class="card"><h3>🖼️ Leadership Customization</h3><p class="muted small">আগে থেকে থাকা leadership-গুলোর নাম/পদ আবার লিখতে হবে না। প্রতিটি ব্যক্তির <b>Change Photo</b> দিয়ে শুধু ছবি বদলাতে পারবেন। চাইলে নাম, পদ ও এলাকা-ও Edit করে Save করতে পারবেন।</p><div id="leadershipAdminList" class="release-list"><div class="empty">Leadership লোড হচ্ছে…</div></div><div id="leadStatus" class="status"></div></div>
+<div class="card"><h3>Social Worker</h3><form id="workerForm"><input id="workerName" placeholder="কর্মীর নাম" required><input id="workerArea" placeholder="এলাকা"><input id="workerWard" placeholder="ওয়ার্ড"><input id="workerPhoto" type="file" accept="image/*"><button class="btn primary">Save Worker</button><div id="workerStatus" class="status"></div></form></div>
+<div class="card"><h3>Activity Verification</h3><form id="activityAdminForm"><input id="activityId" placeholder="Activity UUID" required><input id="activityPoints" type="number" min="0" placeholder="Points" required><button class="btn primary">Approve + Points</button><div id="activityAdminStatus" class="status"></div></form></div>
+<div class="card"><h3>Breaking Ticker</h3><form id="tickerForm"><input id="tickerInput" placeholder="Ticker message" required><button class="btn primary">Publish Ticker</button><div id="tickerAdminStatus" class="status"></div></form></div>
+<div class="card"><h3>🗳️ Poll Management</h3><form id="pollAdminForm"><input id="pollQuestion" maxlength="300" placeholder="Poll question" required><input id="pollA" maxlength="120" placeholder="Option A" required><input id="pollB" maxlength="120" placeholder="Option B" required><button class="btn primary">Publish Poll</button><div id="pollAdminStatus" class="status"></div></form></div>
+<div class="card"><h3>🤝 Volunteer Opportunity</h3><form id="volAdminForm"><input id="volTitle" maxlength="160" placeholder="কাজের নাম" required><textarea id="volDescription" maxlength="2000" placeholder="কাজের বিবরণ"></textarea><input id="volCategory" maxlength="80" placeholder="Category"><input id="volDate" type="datetime-local"><input id="volLocation" maxlength="160" placeholder="Location"><button class="btn primary">Publish Volunteer Work</button><div id="volAdminStatus" class="status"></div></form></div>
+<div class="card"><h3>💡 Feedback Inbox</h3><button class="btn" id="loadIdeasBtn" type="button">Load Latest Ideas</button><div id="ideasAdminList" class="mini" style="margin-top:10px"></div></div>
+<div class="card"><h3>📢 Release Publish</h3><form id="releaseForm"><input id="releaseTitle" placeholder="Release / Notice title" required><textarea id="releaseBody" placeholder="বিস্তারিত লিখুন"></textarea><input id="releaseFile" type="file" accept="image/*,.pdf,.doc,.docx"><button class="btn primary">Publish Release</button><div id="releaseStatus" class="status"></div></form></div>
+<div class="card"><h3>📱 Facebook Live / Social Video</h3><form id="socialForm"><input id="socialTitle" placeholder="ভিডিওর শিরোনাম" required><input id="socialUrl" type="url" placeholder="Facebook Live video URL" required><textarea id="socialDescription" placeholder="সংক্ষিপ্ত বিবরণ"></textarea><input id="socialThumb" type="file" accept="image/*"><button class="btn primary">Publish Video</button><div id="socialStatus" class="status"></div></form></div>
+</div></section>
+</main><footer><div class="wrap">© BJYM South Howrah 3 No Mondal</div></footer>
+<dialog id="viewerDialog"><div class="viewer-head"><div class="viewer-title" id="viewerTitle">Preview</div><button class="close" id="viewerClose" type="button">×</button></div><div class="viewer-body" id="viewerBody"></div><div class="viewer-actions"><a class="btn" id="viewerOpen" target="_blank" rel="noopener">↗ নতুন ট্যাবে খুলুন</a><button class="btn primary" id="viewerClose2" type="button">বন্ধ করুন</button></div></dialog><dialog id="loginDialog"><button class="close" id="closeLogin">×</button><h3>Admin Login</h3><form id="loginForm"><label>Login ID</label><input id="email" type="email" autocomplete="username" required><label>Password</label><input id="password" type="password" autocomplete="current-password" required><button class="btn primary" type="submit">Sign in</button><div id="loginStatus" class="status"></div></form></dialog>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script>
+const U="https://udiggdolyxexducoaimz.supabase.co",K="sb_publishable_Miuh6QQVWjXRlU1-Hu2PaA_urnDXk7q",db=supabase.createClient(U,K,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});
+const leaders=[["নরেন্দ্র দামোদরদাস মোদী","ভারতের প্রধানমন্ত্রী"],["শ্রী শুভেন্দু অধিকারী","পশ্চিমবঙ্গের মুখ্যমন্ত্রী"],["শ্রী শমিক ভট্টাচার্য","পশ্চিমবঙ্গ রাজ্য সভাপতি — ভারতীয় জনতা পার্টি"],["শ্রী ইন্দ্রনীল খাঁ","ভারতীয় জনতা যুব মোর্চার রাজ্য সভাপতি"]],mondal=[["শ্রীযুক্ত রবিন পাল মহোদয়","ভারতীয় জনতা পার্টির মণ্ডল সভাপতি"],["শ্রী কৃষ্ণেন্দু পোল্ল্যে (সঞ্জু)","ভারতীয় জনতা যুব মোর্চার সভাপতি"]];
+const $=x=>document.getElementById(x),esc=x=>String(x??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c])),ini=x=>x.trim().split(/\s+/).slice(0,2).map(y=>y[0]).join("");
+function people(id,a){$(id).innerHTML=a.map(x=>`<article class="card"><div class="avatar">${esc(ini(x[0]))}</div><h3>${esc(x[0])}</h3><div class="role">${esc(x[1])}</div></article>`).join("")}people("leadersGrid",leaders);people("mondalGrid",mondal);
+async function loadLeadership(){let r=await db.from("leadership_profiles").select("*").eq("active",true).order("sort_order").order("created_at");if(r.error){$("leadersGrid").innerHTML=$("mondalGrid").innerHTML=`<div class="card empty">Leadership load error: ${esc(r.error.message)}</div>`;return}let a=r.data||[];let top=a.filter(x=>x.level!=="local"),local=a.filter(x=>x.level==="local");function card(x){return `<article class="card"><div class="avatar">${x.photo_path?`<img class="leader-photo" src="${esc(publicUrl(x.photo_path))}" alt="">`:esc(ini(x.name||"?"))}</div><h3>${esc(x.name)}</h3><div class="role">${esc(x.title||"")}</div>${x.area?`<div class="muted small">${esc(x.area)}</div>`:""}</article>`}$("leadersGrid").innerHTML=top.length?top.map(card).join(""):`<div class="card empty">Leadership এখনও যোগ করা হয়নি।</div>`;$("mondalGrid").innerHTML=local.length?local.map(card).join(""):`<div class="card empty">মণ্ডল leadership এখনও যোগ করা হয়নি।</div>`;if(document.querySelector("#adminPanel.admin.show"))renderLeadershipAdmin(a)}
+function renderLeadershipAdmin(a){$("leadershipAdminList").innerHTML=a.length?a.map(x=>`<div class="card" style="margin-top:8px"><div style="display:flex;gap:12px;align-items:center"><div class="avatar" style="margin:0;flex:none">${x.photo_path?`<img class="leader-photo" src="${esc(publicUrl(x.photo_path))}" alt="">`:esc(ini(x.name||"?"))}</div><div style="flex:1"><b>${esc(x.name)}</b><div class="mini">${esc(x.title||"")}</div></div></div><form class="lead-edit" data-id="${x.id}" style="margin-top:10px"><input name="name" value="${esc(x.name)}" placeholder="নাম" required><input name="title" value="${esc(x.title)}" placeholder="পদ" required><input name="area" value="${esc(x.area||"")}" placeholder="এলাকা (ঐচ্ছিক)"><input name="photo" type="file" accept="image/*"><div class="actions"><button class="btn primary" type="submit">💾 Save Changes</button></div><div class="status"></div></form></div>`).join(""):`<div class="empty">Leadership নেই।</div>`;document.querySelectorAll(".lead-edit").forEach(f=>f.onsubmit=async e=>{e.preventDefault();let st=f.querySelector(".status");st.textContent="Saving…";try{let d=new FormData(f),patch={name:String(d.get("name")||"").trim(),title:String(d.get("title")||"").trim(),area:String(d.get("area")||"").trim()||null};let file=d.get("photo");if(file&&file.size)patch.photo_path=await uploadImage(file,"leadership");let r=await db.from("leadership_profiles").update(patch).eq("id",f.dataset.id);st.textContent=r.error?r.error.message:"Saved successfully.";if(!r.error)await loadLeadership()}catch(err){st.textContent=err.message}})}
 
-  <section id="socialMedia">
-    <h2>📱 Social Media Corner</h2>
-    <p class="muted">Facebook Live ও অন্যান্য প্রকাশিত ভিডিও/সোশ্যাল মিডিয়া আপডেট এখানে এক জায়গায় দেখা যাবে।</p>
-    <div class="social-list" id="socialMediaList">
-      <div class="card empty">ভিডিও লোড হচ্ছে…</div>
-    </div>
-  </section>
-
-  <section id="activityFeed">
-    <h2>📸 সমাজসেবা অ্যাক্টিভিটি ফিড</h2>
-    <div class="feed" id="activityList">
-      <div class="card empty">অ্যাক্টিভিটি লোড হচ্ছে…</div>
-    </div>
-  </section>
-
-  <section id="leaders">
-    <h2>নেতৃত্ব</h2>
-    <div class="grid" id="leadersGrid"></div>
-  </section>
-
-  <section>
-    <h2>মণ্ডল নেতৃত্ব</h2>
-    <div class="grid" id="mondalGrid"></div>
-  </section>
-
-  <section>
-    <h2>📅 Upcoming Social Drives</h2>
-    <div id="eventsList">
-      <div class="card empty">লোড হচ্ছে…</div>
-    </div>
-  </section>
-
-  <section>
-    <h2>🚨 Local Emergency Contacts</h2>
-    <div class="grid" id="contactsGrid">
-      <div class="card empty">লোড হচ্ছে…</div>
-    </div>
-  </section>
-
-  <section>
-    <h2>🏛️ সরকারি কল্যাণ প্রকল্প সহায়িকা</h2>
-    <div class="grid" id="schemesGrid">
-      <div class="card empty">লোড হচ্ছে…</div>
-    </div>
-  </section>
-
-  <section>
-    <h2>🪷 অনুপ্রেরণা</h2>
-    <div class="grid" id="quotesGrid">
-      <div class="card empty">লোড হচ্ছে…</div>
-    </div>
-  </section>
-
-  <section id="polls">
-    <h2>🗳️ Surveys & Opinion Polls</h2>
-    <p class="muted">নতুন সিদ্ধান্ত, কার্যক্রম বা স্থানীয় মতামত বিষয়ে ওয়ান-ক্লিক ভোট দিন। প্রতিটি poll-এর বিষয় নিরপেক্ষভাবে উপস্থাপন করা হবে।</p>
-    <div class="poll-grid" id="pollList">
-      <div class="card empty">Poll লোড হচ্ছে…</div>
-    </div>
-  </section>
-
-  <section id="volunteers">
-    <h2>🤝 Micro-Volunteering</h2>
-    <p class="muted">ছোট সামাজিক কাজ বা স্বেচ্ছাসেবী উদ্যোগে অংশ নিতে একটি কাজ বেছে নিয়ে নাম ও যোগাযোগের তথ্য দিন। চাইলে ছোট volunteer group-এর নামও দিতে পারবেন।</p>
-    <div class="vol-grid" id="volunteerList">
-      <div class="card empty">Volunteer opportunities লোড হচ্ছে…</div>
-    </div>
-  </section>
-
-  <section id="ideas">
-    <h2>💡 Share Ideas — Direct Feedback Portal</h2>
-    <p class="muted">অ্যাডমিন/ম্যানেজমেন্টের কাছে সরাসরি আইডিয়া, পরামর্শ বা feedback পাঠানোর জায়গা।</p>
-    <form class="card idea-box" id="ideaForm">
-      <input id="ideaName" maxlength="80" placeholder="আপনার নাম (ঐচ্ছিক)">
-      <input id="ideaContact" maxlength="120" placeholder="Phone / Email (ঐচ্ছিক)">
-      <input id="ideaSubject" maxlength="160" placeholder="বিষয়ের নাম" required>
-      <textarea id="ideaMessage" maxlength="5000" placeholder="আপনার আইডিয়া বা পরামর্শ লিখুন…" required></textarea>
-      <button class="btn primary" type="submit">📨 সরাসরি পাঠান</button>
-      <div id="ideaStatus" class="status"></div>
-    </form>
-  </section>
-
-  <section id="posts">
-    <h2>জনসাধারণের পোস্ট</h2>
-    <form class="card" id="postForm">
-      <label>পরিচিতি / Display Name</label>
-      <input id="displayName" maxlength="80" required>
-      <label>বার্তা</label>
-      <textarea id="message" maxlength="5000" required></textarea>
-      <button class="btn primary" type="submit">বার্তা জমা দিন</button>
-      <div id="postStatus" class="status"></div>
-    </form>
-    <div id="postsList" style="margin-top:12px"></div>
-  </section>
-
-  <section class="admin" id="adminPanel">
-    <h2>⚙️ Admin Control Center</h2>
-    <div class="card">
-      <b>Admin mode active</b>
-      <p class="muted">এখান থেকেই leadership photo, worker, activity verification, points, ticker ও social-drive content পরিচালনা করা যাবে।</p>
-      <div class="actions">
-        <button class="btn" id="refreshBtn">Refresh</button>
-        <button class="btn" id="logoutBtn">Logout</button>
-      </div>
-      <div id="adminStatus" class="status"></div>
-    </div>
-    
-    <div class="admin-grid" style="margin-top:12px">
-      <div class="card">
-        <h3>🖼️ Leadership Customization</h3>
-        <p class="muted small">আগে থেকে থাকা leadership-গুলোর নাম/পদ আবার লিখতে হবে না। প্রতিটি ব্যক্তির <b>Change Photo</b> দিয়ে শুধু ছবি বদলাতে পারবেন। চাইলে নাম, পদ ও এলাকা-ও Edit করে Save করতে পারবেন।</p>
-        <div id="leadershipAdminList" class="release-list">
-          <div class="empty">Leadership লোড হচ্ছে…</div>
-        </div>
-        <div id="leadStatus" class="status"></div>
-      </div>
-
-      <div class="card">
-        <h3>📊 Live Impact Customization</h3>
-        <p class="muted small">Admin can edit the live numbers and labels. Changes are saved to Supabase when the existing impact table is available.</p>
-        <div id="impactAdminList"></div>
-        <button class="btn" id="loadImpactAdminBtn" type="button" style="margin-top:8px">Load / Edit Live Impact</button>
-        <div id="impactAdminStatus" class="status"></div>
-      </div>
-
-      <div class="card">
-        <h3>Social Worker</h3>
-        <form id="workerForm">
-          <input id="workerName" placeholder="কর্মীর নাম" required>
-          <input id="workerArea" placeholder="এলাকা">
-          <input id="workerWard" placeholder="ওয়ার্ড">
-          <input id="workerPhoto" type="file" accept="image/*">
-          <button class="btn primary">Save Worker</button>
-          <div id="workerStatus" class="status"></div>
-        </form>
-      </div>
-
-      <div class="card">
-        <h3>Activity Verification</h3>
-        <form id="activityAdminForm">
-          <input id="activityId" placeholder="Activity UUID" required>
-          <input id="activityPoints" type="number" min="0" placeholder="Points" required>
-          <button class="btn primary">Approve + Points</button>
-          <div id="activityAdminStatus" class="status"></div>
-        </form>
-      </div>
-
-      <div class="card">
-        <h3>Breaking Ticker</h3>
-        <form id="tickerForm">
-          <input id="tickerInput" placeholder="Ticker message" required>
-          <button class="btn primary">Publish Ticker</button>
-          <div id="tickerAdminStatus" class="status"></div>
-        </form>
-      </div>
-
-      <div class="card">
-        <h3>🗳️ Poll Management</h3>
-        <form id="pollAdminForm">
-          <input id="pollQuestion" maxlength="300" placeholder="Poll question" required>
-          <input id="pollA" maxlength="120" placeholder="Option A" required>
-          <input id="pollB" maxlength="120" placeholder="Option B" required>
-          <button class="btn primary">Publish Poll</button>
-          <div id="pollAdminStatus" class="status"></div>
-        </form>
-      </div>
-
-      <div class="card">
-        <h3>🤝 Volunteer Opportunity</h3>
-        <form id="volAdminForm">
-          <input id="volTitle" maxlength="160" placeholder="কাজের নাম" required>
-          <textarea id="volDescription" maxlength="2000" placeholder="কাজের বিবরণ"></textarea>
-          <input id="volCategory" maxlength="80" placeholder="Category">
-          <input id="volDate" type="datetime-local">
-          <input id="volLocation" maxlength="160" placeholder="Location">
-          <button class="btn primary">Publish Volunteer Work</button>
-          <div id="volAdminStatus" class="status"></div>
-        </form>
-      </div>
-
-      <div class="card">
-        <h3>💡 Feedback Inbox</h3>
-        <button class="btn" id="loadIdeasBtn" type="button">Load Latest Ideas</button>
-        <div id="ideasAdminList" class="mini" style="margin-top:10px"></div>
-      </div>
-
-      <div class="card">
-        <h3>📢 Release Publish</h3>
-        <form id="releaseForm">
-          <input id="releaseTitle" placeholder="Release / Notice title" required>
-          <textarea id="releaseBody" placeholder="বিস্তারিত লিখুন"></textarea>
-          <input id="releaseFile" type="file" accept="image/*,.pdf,.doc,.docx">
-          <button class="btn primary">Publish Release</button>
-          <div id="releaseStatus" class="status"></div>
-        </form>
-      </div>
-
-      <div class="card">
-        <h3>📱 Facebook Live / Social Video</h3>
-        <form id="socialForm">
-          <input id="socialTitle" placeholder="ভিডিওর শিরোনাম" required>
-          <input id="socialUrl" type="url" placeholder="Facebook Live video URL" required>
-          <textarea id="socialDescription" placeholder="সংক্ষিপ্ত বিবরণ"></textarea>
-          <input id="socialThumb" type="file" accept="image/*">
-          <button class="btn primary">Publish Video</button>
-          <div id="socialStatus" class="status"></div>
-        </form>
-      </div>
-    </div>
-  </section>
-
-  <section class="card" id="president-contact" style="margin:24px 0;padding:24px;border-radius:22px;background:linear-gradient(135deg,rgba(255,153,0,.14),rgba(19,136,8,.12));border:1px solid rgba(255,153,0,.35);box-shadow:0 12px 35px rgba(0,0,0,.18);text-align:center">
-    <h2 style="margin:0 0 8px">📞 সরাসরি সভাপতির সঙ্গে যোগাযোগ</h2>
-    <div style="font-size:1.15rem;font-weight:800">শ্রী কৃষ্ণেন্দু পোল্ল্যে (সঞ্জু)</div>
-    <div style="font-size:.88rem;opacity:.78;margin:4px 0 16px">ভারতীয় জনতা যুব মোর্চার সভাপতি — সরাসরি যোগাযোগের মাধ্যম</div>
-    <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
-      <a href="tel:+917003935754" style="padding:11px 18px;border-radius:12px;text-decoration:none;font-weight:800;background:rgba(2,132,199,.18);color:inherit">📱 +91 7003935754</a>
-      <a href="mailto:polleysanju@gmail.com" style="padding:11px 18px;border-radius:12px;text-decoration:none;font-weight:800;background:rgba(236,72,153,.14);color:inherit">✉️ polleysanju@gmail.com</a>
-    </div>
-    <div style="margin-top:18px;font-size:.9rem;line-height:1.7">
-      <b>অঞ্চল:</b> Duiliya, Jhorehat, Panchpara, Thanamakua<br>
-      <b>অফিস:</b> Basudevpur, Jhorehat, Howrah-711304
-    </div>
-  </section>
-</main>
-
-<footer>
-  <div class="wrap">© ভারতীয় জনতা যুব মোর্চা দক্ষিণ হাওড়া ৩ নম্বর মন্ডল এবং প্রীতম দাস দ্বারা পরিচালিত </div>
-</footer>
-
-<dialog id="loginDialog">
-  <button class="close" id="closeLogin">×</button>
-  <h3>Admin Login</h3>
-  <form id="loginForm">
-    <label>Login ID</label>
-    <input id="email" type="email" autocomplete="username" required>
-    <label>Password</label>
-    <input id="password" type="password" autocomplete="current-password" required>
-    <button class="btn primary" type="submit">Sign in</button>
-    <div id="loginStatus" class="status"></div>
-  </form>
-</dialog>
-
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script>
-const U = "https://udiggdolyxexducoaimz.supabase.co";
-const K = "sb_publishable_Miuh6QQVWjXRlU1-Hu2PaA_urnDXk7q";
-const db = supabase.createClient(U, K, {
-  auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: true }
-});
-
-const leaders = [
-  ["নরেন্দ্র দামোদরদাস মোদী", "ভারতের প্রধানমন্ত্রী"],
-  ["শ্রী শুভেন্দু অধিকারী", "পশ্চিমবঙ্গের মুখ্যমন্ত্রী"],
-  ["শ্রী শমিক ভট্টাচার্য", "পশ্চিমবঙ্গ রাজ্য সভাপতি — ভারতীয় জনতা পার্টি"],
-  ["শ্রী ইন্দ্রনীল খাঁ", "ভারতীয় জনতা যুব মোর্চার রাজ্য সভাপতি"]
-];
-const mondal = [
-  ["শ্রীযুক্ত রবিন পাল মহোদয়", "ভারতীয় জনতা পার্টির মণ্ডল সভাপতি"],
-  ["শ্রী কৃষ্ণেন্দু পোল্ল্যে (সঞ্জু)", "ভারতীয় জনতা যুব মোর্চার সভাপতি"]
-];
-
-const $ = x => document.getElementById(x);
-const esc = x => String(x ?? "").replace(/[&<>"']/g, c => ({
-  "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
-}[c]));
-const ini = x => x.trim().split(/\s+/).slice(0, 2).map(y => y[0]).join("");
-
-function people(id, a) {
-  $(id).innerHTML = a.map(x => `
-    <article class="card">
-      <div class="avatar">${esc(ini(x[0]))}</div>
-      <h3>${esc(x[0])}</h3>
-      <div class="role">${esc(x[1])}</div>
-    </article>
-  `).join("");
+function publicUrl(path){if(!path)return "";return db.storage.from("social-impact-media").getPublicUrl(path).data.publicUrl}
+function renderImmediatePublicFallbacks(){
+ const contacts=[
+ {service_name:"একক জরুরি সহায়তা (পুলিশ / ফায়ার / মেডিক্যাল)",phone:"112",note:"সারা ভারতের জরুরি সহায়তা।"},
+ {service_name:"অ্যাম্বুলেন্স",phone:"108",note:"জরুরি চিকিৎসা সহায়তা; সংযোগ না পেলে 112-এ ফোন করুন।"},
+ {service_name:"ফায়ার সার্ভিস",phone:"101",note:"অগ্নিকাণ্ড ও উদ্ধার-সংক্রান্ত জরুরি সহায়তা।"},
+ {service_name:"রেলওয়ে হেল্পলাইন",phone:"139",note:"রেলযাত্রা-সংক্রান্ত সহায়তা।"},
+ {service_name:"শিশু সহায়তা",phone:"1098",note:"শিশুদের জরুরি সহায়তা।"},
+ {service_name:"সাইবার আর্থিক জালিয়াতি রিপোর্ট",phone:"1930",note:"অনলাইন আর্থিক প্রতারণা দ্রুত রিপোর্ট করুন।"}
+ ];
+ $("contactsGrid").innerHTML=contacts.map(x=>`<article class="card"><h3>${esc(x.service_name)}</h3><a class="btn primary info-link" href="tel:${esc(x.phone)}">📞 ${esc(x.phone)}</a><p class="muted">${esc(x.note)}</p></article>`).join("");
+ const schemes=[
+ {title:"আয়ুষ্মান ভারত — PM-JAY",description:"যোগ্যতা ও চিকিৎসা সুবিধা সরকারি পোর্টালে যাচাই করুন।",url:"https://beneficiary.nha.gov.in/"},
+ {title:"PM-KISAN",description:"কৃষক সহায়তা, e-KYC ও কিস্তির তথ্য।",url:"https://pmkisan.gov.in/"},
+ {title:"প্রধানমন্ত্রী মুদ্রা যোজনা",description:"ক্ষুদ্র ব্যবসা ও উদ্যোগের ঋণ-সংক্রান্ত সরকারি তথ্য।",url:"https://www.mudra.org.in/"},
+ {title:"National Career Service",description:"চাকরি খোঁজা ও ক্যারিয়ার পরিষেবা।",url:"https://www.ncs.gov.in/"},
+ {title:"লক্ষ্মীর ভাণ্ডার ও রাজ্য প্রকল্প",description:"পশ্চিমবঙ্গ সরকারের প্রকল্প ও যোগ্যতার তথ্য যাচাই করুন।",url:"https://wb.gov.in/government-schemes.aspx"},
+ {title:"স্বাস্থ্যসাথী",description:"স্বাস্থ্যসাথী কার্ড ও পরিষেবার সরকারি তথ্য।",url:"https://swasthyasathi.gov.in/"},
+ {title:"কন্যাশ্রী ও রূপশ্রী",description:"যোগ্যতা, আবেদন ও বর্তমান নির্দেশিকা সরকারি পোর্টালে দেখুন।",url:"https://wb.gov.in/government-schemes.aspx"},
+ {title:"কৃষকবন্ধু",description:"কৃষক সহায়তা ও আবেদনের সর্বশেষ তথ্য।",url:"https://krishakbandhu.wb.gov.in/"},
+ {title:"দুয়ারে সরকার",description:"সরকারি পরিষেবা ও প্রকল্পের আবেদন সংক্রান্ত তথ্য।",url:"https://ds.wb.gov.in/dws7/Portal_New_Default.aspx"},
+ {title:"কেন্দ্রীয় ও রাজ্য প্রকল্প অনুসন্ধান",description:"নিজের যোগ্যতা অনুযায়ী প্রকল্প খুঁজুন।",url:"https://www.myscheme.gov.in/"}
+ ];
+ $("schemesGrid").innerHTML=schemes.map(x=>`<article class="card scheme-card"><h3>${esc(x.title)}</h3><p>${esc(x.description)}</p><a class="btn info-link" href="${esc(x.url)}" target="_blank" rel="noopener">বিস্তারিত / সরকারি ওয়েবসাইট ↗</a></article>`).join("");
+ const quotes=[
+ {person_name:"স্বামী বিবেকানন্দ",quote_text:"নিজের শক্তির উপর বিশ্বাস রাখুন; আত্মবিশ্বাস ও সেবার মনোভাব মানুষকে এগিয়ে নিয়ে যায়।",bio:"যুবসমাজ, শিক্ষা ও মানবসেবার অনুপ্রেরণা।"},
+ {person_name:"নরেন্দ্র মোদী",quote_text:"জনসেবা, কর্তব্যবোধ ও উন্নয়নের কাজে সক্রিয় অংশগ্রহণ করুন।",bio:"কর্তব্য ও নাগরিক অংশগ্রহণের অনুপ্রেরণা।"},
+ {person_name:"নেতাজি সুভাষচন্দ্র বসু",quote_text:"সাহস, শৃঙ্খলা ও মানুষের জন্য কাজ করার মানসিকতা গড়ে তুলুন।",bio:"স্বাধীনতা সংগ্রামের অন্যতম প্রধান নেতা।"},
+ {person_name:"রবীন্দ্রনাথ ঠাকুর",quote_text:"মানবিকতা, শিক্ষা ও সৃজনশীলতার মাধ্যমে সমাজকে সমৃদ্ধ করুন।",bio:"কবি, শিক্ষাবিদ ও বিশ্বমানবতার ভাবনার প্রবক্তা।"},
+ {person_name:"ড. বি. আর. আম্বেদকর",quote_text:"শিক্ষা, সমতা ও সাংবিধানিক মূল্যবোধকে জীবনের ভিত্তি করুন।",bio:"সামাজিক ন্যায় ও সমতার প্রবক্তা।"}
+ ];
+ $("quotesGrid").innerHTML=quotes.map(x=>`<article class="card"><p>“${esc(x.quote_text)}”</p><b>${esc(x.person_name)}</b><p class="muted small">${esc(x.bio)}</p></article>`).join("");
+ $("eventsList").innerHTML='<div class="card empty">বর্তমানে কোনও কর্মসূচি প্রকাশিত নেই। নতুন কর্মসূচি প্রকাশিত হলে অ্যাডমিন প্যানেল থেকে প্রকাশ করুন।</div>';
+ $("monthlyWinner").innerHTML='<div class="empty">এই মাসের verified activity এখনও নেই।</div>';
+ $("leaderboardList").innerHTML='<div class="card empty">এখনও কোনও verified service activity নেই। যাচাইকৃত কাজ অনুমোদিত হলে এখানে তালিকা দেখা যাবে।</div>';
 }
-people("leadersGrid", leaders);
-people("mondalGrid", mondal);
-
-const LEADER_FALLBACKS = [
-  { name: "নরেন্দ্র দামোদরদাস মোদী", title: "ভারতের প্রধানমন্ত্রী", level: "state", bio: "ভারতের প্রধানমন্ত্রী হিসেবে জনসেবা, প্রশাসন ও জাতীয় উন্নয়নমূলক কর্মসূচিতে নেতৃত্ব প্রদান করছেন।" },
-  { name: "শ্রী শুভেন্দু অধিকারী", title: "পশ্চিমবঙ্গের মুখ্যমন্ত্রী", level: "state", bio: "পশ্চিমবঙ্গের রাজনৈতিক ও সাংগঠনিক নেতৃত্বের গুরুত্বপূর্ণ দায়িত্বে থাকা জননেতা।" },
-  { name: "শ্রী শমিক ভট্টাচার্য", title: "পশ্চিমবঙ্গ রাজ্য সভাপতি — ভারতীয় জনতা পার্টি", level: "senior", bio: "পশ্চিমবঙ্গে দলীয় সংগঠন ও জনসম্পৃক্ত কার্যক্রমে নেতৃত্বের দায়িত্ব পালন করছেন।" },
-  { name: "শ্রী ইন্দ্রনীল খাঁ", title: "ভারতীয় জনতা যুব মোর্চার রাজ্য সভাপতি", level: "senior", bio: "যুব সংগঠন, সাংগঠনিক কার্যক্রম ও সমাজসেবামূলক উদ্যোগে নেতৃত্ব দিচ্ছেন।" },
-  { name: "শ্রীযুক্ত রবিন পাল মহোদয়", title: "ভারতীয় জনতা পার্টির মণ্ডল সভাপতি", level: "local", bio: "মণ্ডল স্তরে সাংগঠনিক ও জনসংযোগমূলক কার্যক্রম পরিচালনায় নেতৃত্ব দিচ্ছেন।" },
-  { name: "শ্রী কৃষ্ণেন্দু পোল্ল্যে (সঞ্জু)", title: "ভারতীয় জনতা যুব মোর্চার সভাপতি", level: "local", bio: "যুব সংগঠন ও সমাজসেবামূলক কার্যক্রমে স্থানীয় নেতৃত্ব ও সমন্বয়ের দায়িত্ব পালন করছেন।" }
-];
-
-const LEADER_STORE_KEY = "BJYM_LEADER_CUSTOM_V3";
-
-function leaderStore() {
-  try { return JSON.parse(localStorage.getItem(LEADER_STORE_KEY) || "{}"); } catch (_) { return {}; }
-}
-function saveLeaderStore(x) {
-  localStorage.setItem(LEADER_STORE_KEY, JSON.stringify(x));
-}
-function leaderKey(x) {
-  return String(x.id || x.name || "").trim();
-}
-function mergedLeader(x) {
-  let st = leaderStore(), o = st[leaderKey(x)] || st[x.name] || {};
-  return Object.assign({}, x, o);
-}
-function fallbackLeaders() {
-  let st = leaderStore();
-  return LEADER_FALLBACKS.map((x, i) => mergedLeader(Object.assign({ id: "fallback-" + i, sort_order: i, active: true }, x)));
-}
-function safeImg(url, name) {
-  return url ? `<img src="${esc(url)}" alt="${esc(name)}" loading="lazy" onerror="this.onerror=null;this.style.display='none';this.parentElement.querySelector('.leader-fallback').style.display='grid';">` : "";
-}
-function leaderMedia(x, sizeClass = "leader-photo-wrap") {
-  let photo = x.photoData || null;
-  if (!photo && x.photo_path) photo = publicUrl(x.photo_path);
-  return `<div class="${sizeClass}">${safeImg(photo, x.name)}<div class="leader-fallback" style="${photo ? 'display:none' : ''}">${esc(ini(x.name || "?"))}</div></div>`;
-}
-function leaderBio(x) {
-  let b = mergedLeader(x).bio || "";
-  return b ? `<div class="bio">${esc(b)}</div>` : "";
-}
-
-async function loadLeadership() {
-  let r = await db.from("leadership_profiles").select("*").eq("active", true).order("sort_order").order("created_at");
-  let a = (!r.error && r.data && r.data.length) ? r.data.map(mergedLeader) : fallbackLeaders();
-  if (r.error) console.warn("Leadership backend unavailable; using safe fallback/local data", r.error.message);
-  a = a.map(mergedLeader);
-  let top = a.filter(x => x.level !== "local"), local = a.filter(x => x.level === "local");
-
-  function card(x) {
-    return `<article class="card"><div style="display:flex;gap:14px;align-items:flex-start">${leaderMedia(x)}<div style="flex:1"><h3 style="margin:0 0 5px">${esc(x.name)}</h3><div class="role">${esc(x.title || "")}</div>${x.area ? `<div class="muted small">${esc(x.area)}</div>` : ""}</div></div>${leaderBio(x)}</article>`;
-  }
-
-  $("leadersGrid").innerHTML = top.length ? top.map(card).join("") : `<div class="card empty">Leadership এখনও যোগ করা হয়নি।</div>`;
-  $("mondalGrid").innerHTML = local.length ? local.map(card).join("") : `<div class="card empty">মণ্ডল leadership এখনও যোগ করা হয়নি।</div>`;
-  if (document.querySelector("#adminPanel.admin.show")) renderLeadershipAdmin(a);
-}
-
-function renderLeadershipAdmin(a) {
-  $("leadershipAdminList").innerHTML = a.length ? a.map(x => {
-    let k = leaderKey(x), photo = mergedLeader(x).photoData || (x.photo_path ? publicUrl(x.photo_path) : "");
-    return `<div class="card admin-edit-card" style="margin-top:8px"><div style="display:flex;gap:12px;align-items:center"><div>${photo ? `<img class="photo-preview" src="${esc(photo)}" alt="${esc(x.name)}" onerror="this.style.display='none';this.nextElementSibling.style.display='grid'">` : ""}<div class="leader-photo-wrap" style="width:96px;height:96px"><div class="leader-fallback" style="${photo ? 'display:none' : ''}">${esc(ini(x.name || "?"))}</div></div></div><div style="flex:1"><b>${esc(x.name)}</b><div class="mini">${esc(x.title || "")}</div><div class="mini">Photo: ${photo ? 'Available' : 'Fallback avatar active'}</div></div></div><form class="lead-edit" data-id="${esc(k)}" data-db-id="${esc(x.id || "")}" data-name="${esc(x.name)}" style="margin-top:10px"><input name="name" value="${esc(x.name)}" placeholder="নাম" required><input name="title" value="${esc(x.title)}" placeholder="পদ" required><input name="area" value="${esc(x.area || "")}" placeholder="এলাকা (ঐচ্ছিক)"><textarea name="bio" placeholder="Biography / পরিচিতি">${esc(mergedLeader(x).bio || "")}</textarea><input name="photo" type="file" accept="image/*"><div class="photo-actions"><button class="btn" type="button" data-preview="${esc(k)}">👁️ Preview</button><button class="btn" type="button" data-remove-photo="${esc(k)}">🗑️ Remove Photo</button><button class="btn primary" type="submit">💾 Save All Changes</button></div><div class="status"></div><div id="preview-${esc(k)}" style="margin-top:8px"></div></form></div>`;
-  }).join("") : `<div class="empty">Leadership নেই।</div>`;
-
-  document.querySelectorAll(".lead-edit").forEach(f => f.onsubmit = async e => {
-    e.preventDefault();
-    let st = f.querySelector(".status");
-    st.textContent = "Saving…";
-    try {
-      let d = new FormData(f), k = f.dataset.id, store = leaderStore();
-      let patch = {
-        name: String(d.get("name") || "").trim(),
-        title: String(d.get("title") || "").trim(),
-        area: String(d.get("area") || "").trim() || null
-      };
-      let bio = String(d.get("bio") || "").trim();
-      let file = d.get("photo");
-      if (file && file.size) {
-        try {
-          patch.photo_path = await uploadImage(file, "leadership");
-        } catch (err) {
-          patch.photo_path = null;
-          st.textContent = "Cloud photo upload failed; saving browser copy…";
-        }
-        let fr = new FileReader();
-        fr.onload = () => {
-          store[k] = { ...(store[k] || {}), name: patch.name, title: patch.title, area: patch.area, bio, photoData: fr.result };
-          saveLeaderStore(store);
-        };
-        fr.readAsDataURL(file);
-      } else {
-        store[k] = { ...(store[k] || {}), name: patch.name, title: patch.title, area: patch.area, bio };
-        saveLeaderStore(store);
-      }
-      let isFallback = String(f.dataset.dbId || "").startsWith("fallback-");
-      let r = { error: null };
-      if (!isFallback) {
-        r = await db.from("leadership_profiles").update(patch).eq("id", f.dataset.dbId);
-      }
-      if (r.error) {
-        st.textContent = "Cloud save failed; local copy saved. " + r.error.message;
-      } else {
-        st.textContent = "Saved successfully. Refresh-safe photo/content saved.";
-      }
-      await loadLeadership();
-    } catch (err) {
-      st.textContent = "Save failed: " + err.message;
-    }
-  });
-
-  document.querySelectorAll("[data-preview]").forEach(b => b.onclick = () => {
-    let f = document.querySelector(`.lead-edit[data-id="${CSS.escape(b.dataset.preview)}"]`);
-    let file = f?.querySelector('[name="photo"]')?.files?.[0];
-    let box = $("preview-" + b.dataset.preview);
-    if (!file) {
-      box.innerHTML = '<div class="mini">Choose a photo first to preview it.</div>';
-      return;
-    }
-    let u = URL.createObjectURL(file);
-    box.innerHTML = `<img class="photo-preview" src="${u}" alt="Preview">`;
-  });
-
-  document.querySelectorAll("[data-remove-photo]").forEach(b => b.onclick = async () => {
-    let k = b.dataset.removePhoto;
-    let f = document.querySelector(`.lead-edit[data-id="${CSS.escape(k)}"]`);
-    let st = f?.querySelector(".status");
-    let store = leaderStore();
-    if (st) st.textContent = "Removing photo…";
-    delete (store[k] || {}).photoData;
-    store[k] = { ...(store[k] || {}), photoData: null, photo_path: null };
-    saveLeaderStore(store);
-    let dbid = f?.dataset.dbId;
-    if (dbid && !String(dbid).startsWith("fallback-")) {
-      let r = await db.from("leadership_profiles").update({ photo_path: null }).eq("id", dbid);
-      if (r.error && st) st.textContent = "Local photo removed; cloud remove failed: " + r.error.message;
-    }
-    await loadLeadership();
-  });
-}
-
-function publicUrl(path) {
-  if (!path) return "";
-  return db.storage.from("social-impact-media").getPublicUrl(path).data.publicUrl;
-}
-
-async function loadAll() {
-  await loadLeadership();
-  let m = await db.from("impact_metrics").select("*").eq("active", true).order("sort_order");
-  $("impactGrid").innerHTML = (m.data || []).map(x => `
-    <div class="card impact-card">
-      <div class="impact-number" data-target="${x.value}">0${esc(x.suffix)}</div>
-      <div>${esc(x.label)}</div>
-    </div>
-  `).join("");
-  document.querySelectorAll(".impact-number").forEach(el => {
-    let n = +el.dataset.target, i = 0, step = Math.max(1, Math.ceil(n / 35));
-    let t = setInterval(() => {
-      i = Math.min(n, i + step);
-      el.textContent = i.toLocaleString("en-IN") + (el.textContent.includes("+") ? "+" : "");
-      if (i >= n) clearInterval(t);
-    }, 22);
-  });
-
-  let l = await db.from("social_leaderboard").select("*").order("karma_points", { ascending: false }).limit(20);
-  let rows = l.data || [];
-  $("leaderboardList").innerHTML = rows.length ? rows.map((x, i) => `
-    <div class="rank">
-      <div class="badge">${i < 3 ? ["🥇", "🥈", "🥉"][i] : "#" + (i + 1)}</div>
-      ${x.photo_path ? `<img src="${esc(publicUrl(x.photo_path))}">` : `<div class="avatar" style="margin:0;width:58px;height:58px">${esc(ini(x.name || "?"))}</div>`}
-      <div>
-        <b>${esc(x.name)}</b>
-        <div class="muted small">${esc(x.area || "")} ${x.ward_no ? "• Ward " + esc(x.ward_no) : ""}</div>
-      </div>
-      <div class="points">${Number(x.karma_points || 0)} pts</div>
-    </div>
-  `).join("") : '<div class="card empty">এখনও কোনও verified service activity নেই।</div>';
-
-  let top = rows[0];
-  $("monthlyWinner").innerHTML = top ? `
-    <div style="text-align:center">
-      <div class="role">WARRIOR OF THE MONTH</div>
-      ${top.photo_path ? `<img class="leader-photo" src="${esc(publicUrl(top.photo_path))}">` : ''}
-      <h3>${esc(top.name)}</h3>
-      <div class="points">${Number(top.karma_points || 0)} Karma Points</div>
-    </div>
-  ` : '<div class="empty">এই মাসের verified activity এখনও নেই।</div>';
-
-  let a = await db.from("service_activities").select("*").eq("status", "approved").order("created_at", { ascending: false }).limit(12);
-  $("activityList").innerHTML = (a.data || []).length ? (a.data || []).map(x => `
-    <article class="card">
-      <h3>${esc(x.title || x.activity_type || "সমাজসেবা কার্যক্রম")}</h3>
-      <p>${esc(x.description || "")}</p>
-      ${x.photo_path ? `<img src="${esc(publicUrl(x.photo_path))}">` : ""}
-      <div class="muted">${esc(x.area || "")} ${x.ward_no ? "• Ward " + esc(x.ward_no) : ""} • <b>${Number(x.points || 0)} points</b></div>
-    </article>
-  `).join("") : '<div class="card empty">এখনও কোনও approved activity নেই।</div>';
-
-  let e = await db.from("events").select("*").order("event_date", { ascending: true });
-  $("eventsList").innerHTML = e.error || !e.data?.length ? '<div class="card empty">কোনও কর্মসূচি এখনও প্রকাশিত হয়নি।</div>' : e.data.map(x => `
-    <article class="card">
-      <h3>${esc(x.title)}</h3>
-      <p>${esc(x.description || "")}</p>
-      <p class="muted">${esc(x.event_date || "")} ${esc(x.location || "")}</p>
-    </article>
-  `).join("");
-
-  let c = await db.from("emergency_contacts").select("*").eq("active", true).order("sort_order");
-  $("contactsGrid").innerHTML = (c.data || []).length ? (c.data || []).map(x => `
-    <article class="card">
-      <h3>${esc(x.service_name)}</h3>
-      <a class="btn primary" href="tel:${esc(x.phone)}">📞 ${esc(x.phone)}</a>
-      <p class="muted">${esc(x.area || "")} ${esc(x.note || "")}</p>
-    </article>
-  `).join("") : '<div class="card empty">Admin এখনও emergency contacts যোগ করেননি।</div>';
-
-  let s = await db.from("government_schemes").select("*").eq("active", true);
-  $("schemesGrid").innerHTML = (s.data || []).length ? (s.data || []).map(x => `
-    <article class="card">
-      <h3>${esc(x.title || x.name || "")}</h3>
-      <p>${esc(x.description || x.details || "")}</p>
-    </article>
-  `).join("") : '<div class="card empty">সরকারি প্রকল্পের তথ্য শীঘ্রই যোগ করা হবে।</div>';
-
-  let q = await db.from("inspiration_quotes").select("*").eq("active", true).order("sort_order");
-  $("quotesGrid").innerHTML = (q.data || []).length ? (q.data || []).map(x => `
-    <article class="card">
-      <p>“${esc(x.quote_text)}”</p>
-      <b>${esc(x.person_name)}</b>
-    </article>
-  `).join("") : '<div class="card empty">অনুপ্রেরণামূলক উক্তি শীঘ্রই যোগ করা হবে।</div>';
-
-  let rel = await db.from("releases").select("*").eq("published", true).order("created_at", { ascending: false }).limit(30);
-  $("releaseList").innerHTML = rel.error || !rel.data?.length ? '<div class="card empty">এখনও কোনও প্রকাশনা প্রকাশিত হয়নি।</div>' : rel.data.map(x => `
-    <article class="card release-card">
-      <h3>📢 ${esc(x.title)}</h3>
-      <p>${esc(x.body || "")}</p>
-      ${x.file_path ? `<a class="btn primary" target="_blank" rel="noopener" href="${esc(publicUrl(x.file_path))}">📎 ${esc(x.file_name || "ডকুমেন্ট দেখুন")}</a>` : ""}
-      <div class="muted small">${new Date(x.created_at).toLocaleString("bn-IN")}</div>
-    </article>
-  `).join("");
-
-  let sm = await db.from("social_media_posts").select("*").eq("active", true).order("created_at", { ascending: false }).limit(30);
-  $("socialMediaList").innerHTML = sm.error || !sm.data?.length ? '<div class="card empty">এখনও কোনও social media video প্রকাশিত হয়নি।</div>' : sm.data.map(x => {
-    let u = String(x.video_url || "");
-    let embed = u.includes("facebook.com") ? `<a class="btn primary social-link" target="_blank" rel="noopener" href="${esc(u)}">▶️ Facebook Live ভিডিও দেখুন</a>` : `<a class="btn primary social-link" target="_blank" rel="noopener" href="${esc(u)}">▶️ ভিডিও দেখুন</a>`;
-    return `
-      <article class="card social-card">
-        ${x.thumbnail_path ? `<img class="feed img" src="${esc(publicUrl(x.thumbnail_path))}" alt="">` : ""}
-        <h3>📺 ${esc(x.title)}</h3>
-        <p>${esc(x.description || "")}</p>
-        ${embed}
-        <div class="muted small">${esc(x.platform || "social media")} • ${new Date(x.created_at).toLocaleString("bn-IN")}</div>
-      </article>
-    `;
+renderImmediatePublicFallbacks();
+async function loadAll(){
+ await loadLeadership();
+ let m=await db.from("impact_metrics").select("*").eq("active",true).order("sort_order");$("impactGrid").innerHTML=(m.data||[]).map(x=>`<div class="card impact-card"><div class="impact-number" data-target="${x.value}">0${esc(x.suffix)}</div><div>${esc(x.label)}</div></div>`).join("");document.querySelectorAll(".impact-number").forEach(el=>{let n=+el.dataset.target,i=0,step=Math.max(1,Math.ceil(n/35));let t=setInterval(()=>{i=Math.min(n,i+step);el.textContent=i.toLocaleString("en-IN")+(el.textContent.includes("+")?"+":"");if(i>=n)clearInterval(t)},22)});
+ let l=await db.from("social_leaderboard").select("*").order("karma_points",{ascending:false}).limit(20);let rows=l.data||[];$("leaderboardList").innerHTML=rows.length?rows.map((x,i)=>`<div class="rank"><div class="badge">${i<3?["🥇","🥈","🥉"][i]:"#"+(i+1)}</div>${x.photo_path?`<img src="${esc(publicUrl(x.photo_path))}">`:`<div class="avatar" style="margin:0;width:58px;height:58px">${esc(ini(x.name||"?"))}</div>`}<div><b>${esc(x.name)}</b><div class="muted small">${esc(x.area||"")} ${x.ward_no?"• Ward "+esc(x.ward_no):""}</div></div><div class="points">${Number(x.karma_points||0)} pts</div></div>`).join(""):'<div class="card empty">এখনও কোনও verified service activity নেই।</div>';let top=rows[0];$("monthlyWinner").innerHTML=top?`<div style="text-align:center"><div class="role">WARRIOR OF THE MONTH</div>${top.photo_path?`<img class="leader-photo" src="${esc(publicUrl(top.photo_path))}">`:''}<h3>${esc(top.name)}</h3><div class="points">${Number(top.karma_points||0)} Karma Points</div></div>`:'<div class="empty">এই মাসের verified activity এখনও নেই।</div>';
+ let a=await db.from("service_activities").select("*").eq("status","approved").order("created_at",{ascending:false}).limit(12);$("activityList").innerHTML=(a.data||[]).length?(a.data||[]).map(x=>`<article class="card"><h3>${esc(x.title||x.activity_type||"সমাজসেবা কার্যক্রম")}</h3><p>${esc(x.description||"")}</p>${x.photo_path?`<img class="activity-photo" data-url="${esc(publicUrl(x.photo_path))}" data-title="${esc(x.title||x.activity_type||"সমাজসেবা কার্যক্রম")}" src="${esc(publicUrl(x.photo_path))}" alt="ছবি" style="cursor:zoom-in">`:""}<div class="muted">${esc(x.area||"")} ${x.ward_no?"• Ward "+esc(x.ward_no):""} • <b>${Number(x.points||0)} points</b></div></article>`).join("") :'<div class="card empty">এখনও কোনও approved activity নেই।</div>';
+ document.querySelectorAll(".activity-photo").forEach(img=>img.onclick=()=>openViewer(img.dataset.url,"image",img.dataset.title));
+ let e=await db.from("events").select("*").order("event_date",{ascending:true});$("eventsList").innerHTML=e.error||!e.data?.length?'<div class="card empty">বর্তমানে কোনও কর্মসূচি প্রকাশিত নেই। নতুন কর্মসূচি প্রকাশিত হলে এখানে দেখানো হবে।</div>':e.data.map(x=>`<article class="card"><h3>${esc(x.title)}</h3><p>${esc(x.description||"")}</p><p class="muted">${esc(x.event_date||"")} ${esc(x.location||"")}</p></article>`).join("");
+ let c=await db.from("emergency_contacts").select("*").eq("active",true).order("sort_order");const emergencyFallback=[{service_name:"একক জরুরি সহায়তা (পুলিশ / ফায়ার / মেডিক্যাল)",phone:"112",note:"ভারত সরকারের ERSS জরুরি নম্বর।"},{service_name:"অ্যাম্বুলেন্স",phone:"108",note:"জরুরি চিকিৎসা সহায়তা; সংযোগ না পেলে 112-এ ফোন করুন।"},{service_name:"ফায়ার সার্ভিস",phone:"101",note:"অগ্নিকাণ্ড ও উদ্ধার-সংক্রান্ত জরুরি সহায়তা।"},{service_name:"রেলওয়ে হেল্পলাইন",phone:"139",note:"রেলযাত্রা-সংক্রান্ত সহায়তা; বর্তমান পরিষেবা যাচাই করুন।"},{service_name:"শিশু সহায়তা",phone:"1098",note:"শিশুদের জরুরি সহায়তা।"},{service_name:"সাইবার আর্থিক জালিয়াতি রিপোর্ট",phone:"1930",note:"অনলাইন আর্থিক প্রতারণার ক্ষেত্রে দ্রুত রিপোর্ট করুন।"}];const contacts=(c.data||[]).length?c.data:emergencyFallback;$("contactsGrid").innerHTML=contacts.map(x=>`<article class="card"><h3>${esc(x.service_name)}</h3><a class="btn primary info-link" href="tel:${esc(x.phone)}">📞 ${esc(x.phone)}</a><p class="muted">${esc(x.area||"")} ${esc(x.note||"")}</p></article>`).join("");
+ let s=await db.from("government_schemes").select("*").eq("active",true);const schemeFallback=[{title:"আয়ুষ্মান ভারত — PM-JAY",description:"যোগ্য পরিবারের জন্য তালিকাভুক্ত হাসপাতালে নির্ধারিত চিকিৎসা সুবিধা। যোগ্যতা ও নিকটবর্তী হাসপাতাল সরকারি পোর্টালে যাচাই করুন।",url:"https://beneficiary.nha.gov.in/"},{title:"PM-KISAN",description:"যোগ্য কৃষক পরিবারের জন্য প্রকল্পের কিস্তি, e-KYC ও আবেদন-সংক্রান্ত তথ্য সরকারি পোর্টালে পাওয়া যায়।",url:"https://pmkisan.gov.in/"},{title:"প্রধানমন্ত্রী মুদ্রা যোজনা (PMMY)",description:"যোগ্য ক্ষুদ্র উদ্যোগ ও ব্যবসার ঋণ-সংক্রান্ত তথ্যের জন্য সরকারি পোর্টাল এবং অংশগ্রহণকারী ব্যাংকের সঙ্গে যোগাযোগ করুন। ঋণ অনুমোদন শর্তসাপেক্ষ।",url:"https://www.mudra.org.in/"},{title:"National Career Service",description:"চাকরি, চাকরিদাতা এবং ক্যারিয়ার পরিষেবা সম্পর্কে সরকারি তথ্য ও নিবন্ধনের জন্য।",url:"https://www.ncs.gov.in/"}];const wbFallback=[{title:"লক্ষ্মীর ভাণ্ডার",description:"যোগ্য মহিলাদের আর্থিক সহায়তা সংক্রান্ত শর্ত, আবেদন ও বর্তমান অবস্থা সরকারি পোর্টালে যাচাই করুন।",url:"https://wb.gov.in/government-schemes.aspx"},{title:"স্বাস্থ্যসাথী",description:"রাজ্য স্বাস্থ্যসাথী প্রকল্পের যোগ্যতা, কার্ড ও পরিষেবা-সংক্রান্ত তথ্য সরকারি পোর্টালে দেখুন।",url:"https://swasthyasathi.gov.in/"},{title:"কন্যাশ্রী প্রকল্প",description:"ছাত্রীদের জন্য যোগ্যতা, আবেদন ও নবীকরণ-সংক্রান্ত তথ্য।",url:"https://wb.gov.in/government-schemes.aspx"},{title:"রূপশ্রী প্রকল্প",description:"যোগ্য আবেদনকারীদের জন্য বিবাহকালীন এককালীন সহায়তার নিয়ম ও আবেদন পদ্ধতি সরকারি পোর্টালে দেখুন।",url:"https://wb.gov.in/government-schemes.aspx"},{title:"বাংলার কৃষকবন্ধু",description:"কৃষক সহায়তা ও আবেদন-সংক্রান্ত সর্বশেষ তথ্য সরকারি পোর্টালে দেখুন।",url:"https://krishakbandhu.wb.gov.in/"},{title:"স্টুডেন্ট ক্রেডিট কার্ড",description:"শিক্ষাঋণ প্রকল্পের যোগ্যতা, নথি ও আবেদন-সংক্রান্ত তথ্য।",url:"https://wb.gov.in/government-schemes.aspx"},{title:"দুয়ারে সরকার",description:"সরকারি পরিষেবা ও কল্যাণ প্রকল্পের ক্যাম্প এবং আবেদন-সংক্রান্ত তথ্য।",url:"https://ds.wb.gov.in/dws7/Portal_New_Default.aspx"},{title:"কেন্দ্রীয় ও রাজ্য প্রকল্প খুঁজুন",description:"ব্যক্তিগত যোগ্যতা অনুযায়ী সরকারি প্রকল্প খুঁজে দেখুন; সুবিধা ও নিয়ম আবেদন করার আগে যাচাই করুন।",url:"https://www.myscheme.gov.in/"}];renderSchemeMaster();
+ let q=await db.from("inspiration_quotes").select("*").eq("active",true).order("sort_order");const inspirationFallback=[{person_name:"স্বামী বিবেকানন্দ",quote_text:"নিজের শক্তির উপর বিশ্বাস রাখুন; আত্মবিশ্বাস ও সেবার মনোভাব মানুষকে এগিয়ে নিয়ে যায়।",bio:"যুবসমাজ, আত্মবিশ্বাস, শিক্ষা ও মানবসেবার অনুপ্রেরণার প্রতীক।"},{person_name:"নরেন্দ্র মোদী",quote_text:"জনসেবা, কর্তব্যবোধ ও উন্নয়নের কাজে সক্রিয় অংশগ্রহণ করুন।",bio:"জনজীবনে কর্তব্য, উদ্যোগ ও নাগরিক অংশগ্রহণের উপর জোর দেন।"},{person_name:"নেতাজি সুভাষচন্দ্র বসু",quote_text:"শৃঙ্খলা, সাহস ও দেশের মানুষের জন্য কাজ করার মানসিকতা গড়ে তুলুন।",bio:"ভারতের স্বাধীনতা সংগ্রামের অন্যতম প্রধান নেতা; সাহস ও আত্মত্যাগের অনুপ্রেরণা।"},{person_name:"রবীন্দ্রনাথ ঠাকুর",quote_text:"মানবিকতা, শিক্ষা ও সৃজনশীলতার মাধ্যমে সমাজকে সমৃদ্ধ করুন।",bio:"কবি, শিক্ষাবিদ ও বিশ্বমানবতার ভাবনার প্রবক্তা।"},{person_name:"ড. বি. আর. আম্বেদকর",quote_text:"শিক্ষা, সমতা ও সাংবিধানিক মূল্যবোধকে জীবনের ভিত্তি করুন।",bio:"ভারতের সংবিধান প্রণয়নে মুখ্য ভূমিকা; সামাজিক ন্যায় ও সমতার প্রবক্তা।"}];const quotes=(q.data||[]);$("quotesGrid").innerHTML=(quotes.length?quotes:inspirationFallback).map(x=>`<article class="card"><p>“${esc(x.quote_text)}”</p><b>${esc(x.person_name)}</b>${x.bio?`<p class="muted small">${esc(x.bio)}</p>`:""}</article>`).join("");
+ let rel=await db.from("releases").select("*").eq("published",true).order("created_at",{ascending:false}).limit(30);
+  const relRows=rel.data||[];
+  $("releaseList").innerHTML=rel.error||!relRows.length?'<div class="card empty">এখনও কোনও প্রকাশনা প্রকাশিত হয়নি।</div>':relRows.map(x=>{
+    const url=x.file_path?publicUrl(x.file_path):"";
+    const ext=(x.file_name||x.file_path||"").split(".").pop().toLowerCase();
+    const isImg=["jpg","jpeg","png","webp","gif","avif"].includes(ext);
+    return `<article class="card release-card" data-preview-url="${esc(url)}" data-preview-type="${isImg?'image':ext==='pdf'?'pdf':'office'}" data-preview-title="${esc(x.title||"প্রকাশনা")}"><h3>📢 ${esc(x.title)}</h3><p>${esc(x.body||"")}</p>${isImg&&url?`<img class="release-preview" src="${esc(url)}" alt="">`:''}<div class="actions">${url?`<button type="button" class="btn primary preview-btn">📄 ${isImg?'ছবি দেখুন':'ডকুমেন্ট খুলুন'}</button>`:""}<span class="muted small">${new Date(x.created_at).toLocaleString("bn-IN")}</span></div></article>`
   }).join("");
+  document.querySelectorAll(".release-card .preview-btn").forEach(b=>b.onclick=()=>{let c=b.closest(".release-card");openViewer(c.dataset.previewUrl,c.dataset.previewType,c.dataset.previewTitle)});
 
-  let t = await db.from("breaking_tickers").select("message").eq("active", true).order("sort_order").limit(5);
-  $("tickerText").textContent = (t.data || []).map(x => x.message).join(" • ") || "সমাজসেবামূলক কার্যক্রমের আপডেট এখানে প্রদর্শিত হবে।";
-
-  let p = await db.from("public_posts").select("display_name,message,created_at").eq("status", "approved").order("created_at", { ascending: false });
-  $("postsList").innerHTML = p.error || !p.data?.length ? '<div class="card empty">এখনও কোনও approved post নেই।</div>' : p.data.map(x => `
-    <article class="card">
-      <b>${esc(x.display_name)}</b>
-      <p>${esc(x.message)}</p>
-    </article>
-  `).join("");
-}
-
-$("postForm").onsubmit = async e => {
-  e.preventDefault();
-  $("postStatus").textContent = "জমা হচ্ছে…";
-  let r = await db.from("public_posts").insert({
-    display_name: $("displayName").value.trim(),
-    message: $("message").value.trim(),
-    status: "pending"
-  });
-  $("postStatus").textContent = r.error ? "জমা দেওয়া যায়নি।" : "বার্তা জমা হয়েছে। Admin approval-এর পর প্রকাশিত হবে।";
-  if (!r.error) e.target.reset();
-};
-
-$("adminBtn").onclick = () => $("loginDialog").showModal();
-$("closeLogin").onclick = () => $("loginDialog").close();
-
-async function openAdminSession() {
-  let q = await db.auth.getSession();
-  let u = q.data.session?.user;
-  if (!u) return false;
-  let a = await db.from("admin_profiles").select("display_name,role").eq("user_id", u.id).maybeSingle();
-  if (a.error || !a.data) return false;
-  $("loginDialog").close();
-  $("adminPanel").classList.add("show");
-  $("adminStatus").textContent = "Logged in as " + (a.data.display_name || "Admin");
-  let l = await db.from("leadership_profiles").select("*").eq("active", true).order("sort_order").order("created_at");
-  if (!l.error) renderLeadershipAdmin(l.data || []);
-  loadImpactAdmin();
-  return true;
-}
-
-$("loginForm").onsubmit = async e => {
-  e.preventDefault();
-  $("loginStatus").textContent = "Signing in…";
-  let email = $("email").value.trim().toLowerCase(), password = $("password").value;
-  let r = await db.auth.signInWithPassword({ email, password });
-  if (r.error) {
-    $("loginStatus").textContent = "Login failed: " + (r.error.message || "Invalid login details");
-    return;
-  }
-  let ok = await openAdminSession();
-  if (!ok) {
-    await db.auth.signOut();
-    $("loginStatus").textContent = "Login successful, but this account is not registered as an Admin.";
-    return;
-  }
-};
-
-db.auth.onAuthStateChange((event, session) => {
-  if (session) setTimeout(() => openAdminSession(), 0);
-});
-
-async function uploadImage(file, path) {
-  if (!file) return null;
-  let ext = (file.name.split(".").pop() || "jpg").toLowerCase();
-  let full = path + "/" + crypto.randomUUID() + "." + ext;
-  let r = await db.storage.from("social-impact-media").upload(full, file, { upsert: false });
-  if (r.error) throw r.error;
-  return full;
-}
-
-async function loadImpactAdmin() {
-  let r = await db.from("impact_metrics").select("*").eq("active", true).order("sort_order");
-  let a = r.data || [];
-  if (r.error || !a.length) {
-    $("impactAdminList").innerHTML = '<div class="mini">Live Impact table unavailable or empty.</div>';
-    $("impactAdminStatus").textContent = r.error ? r.error.message : "No active metrics.";
-    return;
-  }
-  $("impactAdminList").innerHTML = a.map(x => `
-    <div class="impact-admin-row" data-impact-id="${esc(x.id)}">
-      <input name="label" value="${esc(x.label || "")}" placeholder="Label">
-      <input name="value" type="number" value="${Number(x.value || 0)}" placeholder="Value">
-      <input name="suffix" value="${esc(x.suffix || "")}" placeholder="+">
-      <button class="btn primary" type="button">Save</button>
-    </div>
-  `).join("");
-  document.querySelectorAll(".impact-admin-row button").forEach(b => b.onclick = async () => {
-    let row = b.parentElement;
-    let r = await db.from("impact_metrics").update({
-      label: row.querySelector('[name="label"]').value.trim(),
-      value: Number(row.querySelector('[name="value"]').value || 0),
-      suffix: row.querySelector('[name="suffix"]').value
-    }).eq("id", row.dataset.impactId);
-    $("impactAdminStatus").textContent = r.error ? r.error.message : "Live Impact saved.";
-    if (!r.error) loadAll();
-  });
-}
-
-$("loadImpactAdminBtn").onclick = loadImpactAdmin;
-
-$("workerForm").onsubmit = async e => {
-  e.preventDefault();
-  $("workerStatus").textContent = "Saving…";
-  try {
-    let path = await uploadImage($("workerPhoto").files[0], "workers");
-    let r = await db.from("social_workers").insert({
-      name: $("workerName").value.trim(),
-      area: $("workerArea").value.trim(),
-      ward_no: $("workerWard").value.trim(),
-      photo_path: path
-    });
-    $("workerStatus").textContent = r.error ? r.error.message : "Worker saved.";
-    if (!r.error) e.target.reset();
-  } catch (err) {
-    $("workerStatus").textContent = err.message;
-  }
-};
-
-$("activityAdminForm").onsubmit = async e => {
-  e.preventDefault();
-  let r = await db.from("service_activities").update({
-    status: "approved",
-    points: Number($("activityPoints").value),
-    verified_at: new Date().toISOString()
-  }).eq("id", $("activityId").value.trim());
-  $("activityAdminStatus").textContent = r.error ? r.error.message : "Approved and points saved.";
-  if (!r.error) loadAll();
-};
-
-$("tickerForm").onsubmit = async e => {
-  e.preventDefault();
-  let r = await db.from("breaking_tickers").insert({
-    message: $("tickerInput").value.trim(),
-    active: true
-  });
-  $("tickerAdminStatus").textContent = r.error ? r.error.message : "Ticker published.";
-  if (!r.error) {
-    e.target.reset();
-    loadAll();
-  }
-};
-
-$("releaseForm").onsubmit = async e => {
-  e.preventDefault();
-  $("releaseStatus").textContent = "Publishing…";
-  try {
-    let f = $("releaseFile").files[0], path = null;
-    if (f) path = await uploadImage(f, "releases");
-    let r = await db.from("releases").insert({
-      title: $("releaseTitle").value.trim(),
-      body: $("releaseBody").value.trim(),
-      file_path: path,
-      file_name: f?.name || null,
-      published: true
-    });
-    $("releaseStatus").textContent = r.error ? r.error.message : "Release published.";
-    if (!r.error) {
-      e.target.reset();
-      loadAll();
-    }
-  } catch (err) {
-    $("releaseStatus").textContent = err.message;
-  }
-};
-
-$("socialForm").onsubmit = async e => {
-  e.preventDefault();
-  $("socialStatus").textContent = "Publishing…";
-  try {
-    let f = $("socialThumb").files[0], path = null;
-    if (f) path = await uploadImage(f, "social-thumbnails");
-    let r = await db.from("social_media_posts").insert({
-      platform: "facebook",
-      title: $("socialTitle").value.trim(),
-      description: $("socialDescription").value.trim(),
-      video_url: $("socialUrl").value.trim(),
-      thumbnail_path: path,
-      active: true
-    });
-    $("socialStatus").textContent = r.error ? r.error.message : "Video published.";
-    if (!r.error) {
-      e.target.reset();
-      loadAll();
-    }
-  } catch (err) {
-    $("socialStatus").textContent = err.message;
-  }
-};
-
-async function loadPolls() {
-  let r = await db.from("polls").select("*").eq("active", true).order("created_at", { ascending: false });
-  let a = r.data || [];
-  $("pollList").innerHTML = r.error || !a.length ? '<div class="card empty">এখনও কোনও active poll নেই।</div>' : a.map(p => {
-    let voted = localStorage.getItem("poll-voted-" + p.id) === "1";
-    return `
-      <article class="card poll-box">
-        <h3>🗳️ ${esc(p.question)}</h3>
-        <div class="actions">
-          <button class="btn poll-option" ${voted ? 'disabled' : ''} data-poll="${p.id}" data-opt="a">A. ${esc(p.option_a)}</button>
-          <button class="btn poll-option" ${voted ? 'disabled' : ''} data-poll="${p.id}" data-opt="b">B. ${esc(p.option_b)}</button>
-        </div>
-        <div class="mini">${voted ? 'এই ডিভাইস থেকে আপনার ভোট নেওয়া হয়েছে।':'এক ক্লিকে একটি অপশন নির্বাচন করুন।'}</div>
-      </article>
-    `;
+  let sm=await db.from("social_media_posts").select("*").eq("active",true).order("created_at",{ascending:false}).limit(30);
+  const socialRows=sm.data||[];
+  $("socialMediaList").innerHTML=sm.error||!socialRows.length?'<div class="card empty">এখনও কোনও social media post প্রকাশিত হয়নি।</div>':socialRows.map(x=>{
+    const thumb=x.thumbnail_path?publicUrl(x.thumbnail_path):"";
+    const u=String(x.video_url||"");
+    const fb=u.includes("facebook.com");
+    const fbEmbed=fb && /facebook\.com\/(?:.*\/)?videos\/|facebook\.com\/watch|fb\.watch/i.test(u) ? `https://www.facebook.com/plugins/video.php?href=${encodeURIComponent(u)}&show_text=false&width=560` : "";
+    return `<article class="card social-post">${fbEmbed?`<iframe class="fb-embed" src="${esc(fbEmbed)}" title="Facebook video player" scrolling="no" frameborder="0" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share" allowfullscreen></iframe>`:(thumb?`<img class="social-thumb" data-url="${esc(thumb)}" data-title="${esc(x.title\vert{}\vert{}"Social Media")}" src="${esc(thumb)}" alt="">`:"")}<div class="social-body"><h3>📱 ${esc(x.title)}</h3><p>${esc(x.description||"")}</p><div class="actions"><a class="btn" target="_blank" rel="noopener" href="${esc(u)}">${fb?'ভিডিও না চললে Facebook-এ খুলুন':'মূল সোশ্যাল পোস্ট খুলুন'}</a>${thumb?`<button type="button" class="btn social-image-btn">🖼️ ছবি বড় করে দেখুন</button>`:""}</div><div class="muted small">${esc(x.platform||"social media")} • ${new Date(x.created_at).toLocaleString("bn-IN")}</div></div></article>`
   }).join("");
+  document.querySelectorAll(".social-image-btn").forEach(b=>b.onclick=()=>{let c=b.closest(".social-post"),img=c.querySelector(".social-thumb");openViewer(img.dataset.url,"image",img.dataset.title));
+  document.querySelectorAll(".social-thumb").forEach(img=>img.onclick=()=>openViewer(img.dataset.url,"image",img.dataset.title));
 
-  document.querySelectorAll(".poll-option").forEach(b => b.onclick = async () => {
-    let id = b.dataset.poll, opt = b.dataset.opt;
-    if (localStorage.getItem("poll-voted-" + id)) return;
-    let x = await db.from("poll_votes").insert({ poll_id: id, option_key: opt });
-    if (!x.error) {
-      localStorage.setItem("poll-voted-" + id, "1");
-      loadPolls();
-    } else {
-      alert("ভোট দেওয়া যায়নি: " + x.error.message);
-    }
-  });
+  let g=await db.from("service_activities").select("id,title,description,photo_path,created_at,area,ward_no").eq("status","approved").not("photo_path","is",null).order("created_at",{ascending:false}).limit(60);
+  const galleryRows=g.data||[];
+  $("mediaGallery").innerHTML=g.error||!galleryRows.length?'<div class="card empty">এখনও কোনও ছবি গ্যালারিতে প্রকাশিত হয়নি।</div>':galleryRows.map(x=>{const u=publicUrl(x.photo_path);return `<article class="card media-tile" data-url="${esc(u)}" data-title="${esc(x.title||"সমাজসেবা ছবি")}"><img src="${esc(u)}" alt="${esc(x.title||"")}"><div class="media-caption"><b>${esc(x.title||"সমাজসেবা কার্যক্রম")}</b><div class="muted small">${esc(x.area||"")} ${x.ward_no?"• Ward "+esc(x.ward_no):""}</div></div></article>`}).join("");
+  document.querySelectorAll(".media-tile").forEach(c=>c.onclick=()=>openViewer(c.dataset.url,"image",c.dataset.title));
+
+  let t=await db.from("breaking_tickers").select("message").eq("active",true).order("sort_order").limit(5);$("tickerText").textContent=(t.data||[]).map(x=>x.message).join(" • ")||"সমাজসেবামূলক কার্যক্রমের আপডেট এখানে প্রদর্শিত হবে।";
+ let p=await db.from("public_posts").select("display_name,message,created_at").eq("status","approved").order("created_at",{ascending:false});$("postsList").innerHTML=p.error||!p.data?.length?'<div class="card empty">এখনও কোনও approved post নেই।</div>':p.data.map(x=>`<article class="card"><b>${esc(x.display_name)}</b><p>${esc(x.message)}</p></article>`).join("")}
+$("postForm").onsubmit=async e=>{e.preventDefault();$("postStatus").textContent="জমা হচ্ছে…";let r=await db.from("public_posts").insert({display_name:$("displayName").value.trim(),message:$("message").value.trim(),status:"pending"});$("postStatus").textContent=r.error?"জমা দেওয়া যায়নি।":"বার্তা জমা হয়েছে। Admin approval-এর পর প্রকাশিত হবে।";if(!r.error)e.target.reset()};
+$("adminBtn").onclick=()=>$("loginDialog").showModal();$("closeLogin").onclick=()=>$("loginDialog").close();
+async function openAdminSession(){let q=await db.auth.getSession();let u=q.data.session?.user;if(!u)return false;let a=await db.from("admin_profiles").select("display_name,role").eq("user_id",u.id).maybeSingle();if(a.error||!a.data)return false;$("loginDialog").close();$("adminPanel").classList.add("show");$("adminStatus").textContent="Logged in as "+(a.data.display_name||"Admin");let l=await db.from("leadership_profiles").select("*").eq("active",true).order("sort_order").order("created_at");if(!l.error)renderLeadershipAdmin(l.data||[]);return true}
+$("loginForm").onsubmit=async e=>{e.preventDefault();$("loginStatus").textContent="Signing in…";let email=$("email").value.trim().toLowerCase(),password=$("password").value;let r=await db.auth.signInWithPassword({email,password});if(r.error){$("loginStatus").textContent="Login failed: "+(r.error.message||"Invalid login details");return}let ok=await openAdminSession();if(!ok){await db.auth.signOut();$("loginStatus").textContent="Login successful, but this account is not registered as an Admin.";return}};
+db.auth.onAuthStateChange((event,session)=>{if(session)setTimeout(()=>openAdminSession(),0)});
+
+function showView(id){
+  document.querySelectorAll(".view").forEach(v=>v.classList.remove("active"));
+  const target=$(id); if(target)target.classList.add("active");
+  window.scrollTo({top:0,behavior:"smooth"});
+  document.querySelectorAll("[data-view]").forEach(b=>b.classList.toggle("primary",b.dataset.view===id));
 }
-
-async function loadVolunteers() {
-  let r = await db.from("volunteer_opportunities").select("*").eq("active", true).order("event_date", { ascending: true });
-  let a = r.data || [];
-  $("volunteerList").innerHTML = r.error || !a.length ? '<div class="card empty">এখনও কোনও volunteer opportunity প্রকাশিত হয়নি।</div>' : a.map(v => `
-    <article class="card vol-box">
-      <h3>🤝 ${esc(v.title)}</h3>
-      <p>${esc(v.description || "")}</p>
-      <div class="muted small">${esc(v.category || "")} ${v.event_date ? '• ' + new Date(v.event_date).toLocaleString("bn-IN") : ''} ${v.location ? '• ' + esc(v.location) : ''}</div>
-      <form class="vol-signup" data-id="${v.id}" style="margin-top:10px">
-        <input name="name" maxlength="80" placeholder="আপনার নাম" required>
-        <input name="phone" maxlength="30" placeholder="Phone">
-        <input name="area" maxlength="100" placeholder="এলাকা">
-        <input name="group_name" maxlength="100" placeholder="ছোট গ্রুপের নাম (ঐচ্ছিক)">
-        <button class="btn primary">🙋 Volunteer হিসেবে যুক্ত হোন</button>
-        <div class="status"></div>
-      </form>
-    </article>
-  `).join("");
-
-  document.querySelectorAll(".vol-signup").forEach(f => f.onsubmit = async e => {
-    e.preventDefault();
-    let d = new FormData(f);
-    let r = await db.from("volunteer_signups").insert({
-      opportunity_id: f.dataset.id,
-      name: d.get("name"),
-      phone: d.get("phone"),
-      area: d.get("area"),
-      group_name: d.get("group_name")
-    });
-    f.querySelector(".status").textContent = r.error ? r.error.message : "আপনার volunteer request জমা হয়েছে। Admin confirmation-এর পর status update হবে।";
-    if (!r.error) f.reset();
-  });
+document.addEventListener("click",e=>{const b=e.target.closest("[data-view]");if(b)showView(b.dataset.view)});
+function openViewer(url,type,title){
+  if(!url)return;
+  $("viewerTitle").textContent=title||"Preview";
+  $("viewerOpen").href=url;
+  let body="";
+  if(type==="image") body=`<img src="${esc(url)}" alt="">`;
+  else if(type==="pdf") body=`<iframe src="${esc(url)}#toolbar=0&navpanes=0" title="PDF preview"></iframe>`;
+  else body=`<iframe src="https://view.officeapps.live.com/op/embed.aspx?src=${encodeURIComponent(url)}" title="Document preview"></iframe>`;
+  $("viewerBody").innerHTML=body;
+  $("viewerDialog").showModal();
 }
+$("viewerClose").onclick=()=>$("viewerDialog").close();
+$("viewerClose2").onclick=()=>$("viewerDialog").close();
+$("viewerDialog").addEventListener("click",e=>{if(e.target===e.currentTarget)e.currentTarget.close()});
 
-$("ideaForm").onsubmit = async e => {
-  e.preventDefault();
-  $("ideaStatus").textContent = "পাঠানো হচ্ছে…";
-  let r = await db.from("idea_suggestions").insert({
-    name: $("ideaName").value.trim() || null,
-    contact: $("ideaContact").value.trim() || null,
-    subject: $("ideaSubject").value.trim(),
-    message: $("ideaMessage").value.trim()
-  });
-  $("ideaStatus").textContent = r.error ? r.error.message : "আপনার idea/feedback সরাসরি Admin inbox-এ পাঠানো হয়েছে।";
-  if (!r.error) e.target.reset();
-};
+async function uploadImage(file,path){if(!file)return null;let ext=(file.name.split(".").pop()||"jpg").toLowerCase(),full=path+"/"+crypto.randomUUID()+"."+ext;let r=await db.storage.from("social-impact-media").upload(full,file,{upsert:false});if(r.error)throw r.error;return full}
 
-$("pollAdminForm").onsubmit = async e => {
-  e.preventDefault();
-  let r = await db.from("polls").insert({
-    question: $("pollQuestion").value.trim(),
-    option_a: $("pollA").value.trim(),
-    option_b: $("pollB").value.trim(),
-    active: true
-  });
-  $("pollAdminStatus").textContent = r.error ? r.error.message : "Poll published.";
-  if (!r.error) {
-    e.target.reset();
-    loadPolls();
-  }
-};
+$("workerForm").onsubmit=async e=>{e.preventDefault();$("workerStatus").textContent="Saving…";try{let path=await uploadImage($("workerPhoto").files[0],"workers");let r=await db.from("social_workers").insert({name:$("workerName").value.trim(),area:$("workerArea").value.trim(),ward_no:$("workerWard").value.trim(),photo_path:path});$("workerStatus").textContent=r.error?r.error.message:"Worker saved.";if(!r.error)e.target.reset()}catch(err){$("workerStatus").textContent=err.message}}
+$("activityAdminForm").onsubmit=async e=>{e.preventDefault();let r=await db.from("service_activities").update({status:"approved",points:Number($("activityPoints").value),verified_at:new Date().toISOString()}).eq("id",$("activityId").value.trim());$("activityAdminStatus").textContent=r.error?r.error.message:"Approved and points saved.";if(!r.error)loadAll()};
+$("tickerForm").onsubmit=async e=>{e.preventDefault();let r=await db.from("breaking_tickers").insert({message:$("tickerInput").value.trim(),active:true});$("tickerAdminStatus").textContent=r.error?r.error.message:"Ticker published.";if(!r.error){e.target.reset();loadAll()}};
+$("releaseForm").onsubmit=async e=>{e.preventDefault();$("releaseStatus").textContent="Publishing…";try{let f=$("releaseFile").files[0],path=null;if(f)path=await uploadImage(f,"releases");let r=await db.from("releases").insert({title:$("releaseTitle").value.trim(),body:$("releaseBody").value.trim(),file_path:path,file_name:f?.name\vert{}\vert{}null,published:true});$("releaseStatus").textContent=r.error?r.error.message:"Release published.";if(!r.error){e.target.reset();loadAll()}}catch(err){$("releaseStatus").textContent=err.message}};
+$("socialForm").onsubmit=async e=>{e.preventDefault();$("socialStatus").textContent="Publishing…";try{let f=$("socialThumb").files[0],path=null;if(f)path=await uploadImage(f,"social-thumbnails");let r=await db.from("social_media_posts").insert({platform:"facebook",title:$("socialTitle").value.trim(),description:$("socialDescription").value.trim(),video_url:$("socialUrl").value.trim(),thumbnail_path:path,active:true});$("socialStatus").textContent=r.error?r.error.message:"Video published.";if(!r.error){e.target.reset();loadAll()}}catch(err){$("socialStatus").textContent=err.message}};
 
-$("volAdminForm").onsubmit = async e => {
-  e.preventDefault();
-  let r = await db.from("volunteer_opportunities").insert({
-    title: $("volTitle").value.trim(),
-    description: $("volDescription").value.trim(),
-    category: $("volCategory").value.trim(),
-    event_date: $("volDate").value ? new Date($("volDate").value).toISOString() : null,
-    location: $("volLocation").value.trim(),
-    active: true
-  });
-  $("volAdminStatus").textContent = r.error ? r.error.message : "Volunteer opportunity published.";
-  if (!r.error) {
-    e.target.reset();
-    loadVolunteers();
-  }
-};
+async function loadPolls(){let r=await db.from("polls").select("*").eq("active",true).order("created_at",{ascending:false});let a=r.data||[];$("pollList").innerHTML=r.error||!a.length?'<div class="card empty">এখনও কোনও active poll নেই।</div>':a.map(p=>{let voted=localStorage.getItem("poll-voted-"+p.id)==="1";return `<article class="card poll-box"><h3>🗳️ ${esc(p.question)}</h3><div class="actions"><button class="btn poll-option" ${voted?'disabled':''} data-poll="${p.id}" data-opt="a">A. ${esc(p.option_a)}</button><button class="btn poll-option" ${voted?'disabled':''} data-poll="${p.id}" data-opt="b">B. ${esc(p.option_b)}</button></div><div class="mini">${voted?'এই ডিভাইস থেকে আপনার ভোট নেওয়া হয়েছে।':'এক ক্লিকে একটি অপশন নির্বাচন করুন।'}</div></article>`}).join("");document.querySelectorAll(".poll-option").forEach(b=>b.onclick=async()=>{let id=b.dataset.poll,opt=b.dataset.opt;if(localStorage.getItem("poll-voted-"+id))return;let x=await db.from("poll_votes").insert({poll_id:id,option_key:opt});if(!x.error){localStorage.setItem("poll-voted-"+id,"1");loadPolls()}else alert("ভোট দেওয়া যায়নি: "+x.error.message)})}
+async function loadVolunteers(){let r=await db.from("volunteer_opportunities").select("*").eq("active",true).order("event_date",{ascending:true});let a=r.data||[];$("volunteerList").innerHTML=r.error||!a.length?'<div class="card empty">এখনও কোনও volunteer opportunity প্রকাশিত হয়নি।</div>':a.map(v=>`<article class="card vol-box"><h3>🤝 ${esc(v.title)}</h3><p>${esc(v.description||"")}</p><div class="muted small">${esc(v.category||"")} ${v.event_date?'• '+new Date(v.event_date).toLocaleString("bn-IN"):''} ${v.location?'• '+esc(v.location):''}</div><form class="vol-signup" data-id="${v.id}" style="margin-top:10px"><input name="name" maxlength="80" placeholder="আপনার নাম" required><input name="phone" maxlength="30" placeholder="Phone"><input name="area" maxlength="100" placeholder="এলাকা"><input name="group_name" maxlength="100" placeholder="ছোট গ্রুপের নাম (ঐচ্ছিক)"><button class="btn primary">🙋 Volunteer হিসেবে যুক্ত হোন</button><div class="status"></div></form></article>`).join("");document.querySelectorAll(".vol-signup").forEach(f=>f.onsubmit=async e=>{e.preventDefault();let d=new FormData(f),r=await db.from("volunteer_signups").insert({opportunity_id:f.dataset.id,name:d.get("name"),phone:d.get("phone"),area:d.get("area"),group_name:d.get("group_name")});f.querySelector(".status").textContent=r.error?r.error.message:"আপনার volunteer request জমা হয়েছে। Admin confirmation-এর পর status update হবে।";if(!r.error)f.reset()})}
+$("ideaForm").onsubmit=async e=>{e.preventDefault();$("ideaStatus").textContent="পাঠানো হচ্ছে…";let r=await db.from("idea_suggestions").insert({name:$("ideaName").value.trim()||null,contact:$("ideaContact").value.trim()\vert{}\vert{}null,subject:$("ideaSubject").value.trim(),message:$("ideaMessage").value.trim()});$("ideaStatus").textContent=r.error?r.error.message:"আপনার idea/feedback সরাসরি Admin inbox-এ পাঠানো হয়েছে।";if(!r.error)e.target.reset()};
+$("grievanceForm").onsubmit=async e=>{e.preventDefault();const status=$("grievanceStatus");status.textContent="অভিযোগ জমা হচ্ছে…";const name=$("grievanceName").value.trim()\vert{}\vert{}null,contact=$("grievancePhone").value.trim()||null,ward=$("grievanceWard").value.trim(),area=$("grievanceArea").value.trim(),category=$("grievanceCategory").value,details=$("grievanceDetails").value.trim();const subject=`অভিযোগ | ${category} | ওয়ার্ড ${ward} | ${area}`;const message=`বিভাগ: ${category}\nওয়ার্ড: ${ward}\nএলাকা: ${area}\nবিবরণ: ${details}`;const r=await db.from("idea_suggestions").insert({name,contact,subject,message});status.textContent=r.error?`জমা হয়নি: ${r.error.message}`:"নমস্কার, আপনার অভিযোগটি সফলভাবে জমা হয়েছে। মণ্ডলের অ্যাডমিন ইনবক্সে পাঠানো হয়েছে।";if(!r.error)e.target.reset()};
+$("pollAdminForm").onsubmit=async e=>{e.preventDefault();let r=await db.from("polls").insert({question:$("pollQuestion").value.trim(),option_a:$("pollA").value.trim(),option_b:$("pollB").value.trim(),active:true});$("pollAdminStatus").textContent=r.error?r.error.message:"Poll published.";if(!r.error){e.target.reset();loadPolls()}};
+$("volAdminForm").onsubmit=async e=>{e.preventDefault();let r=await db.from("volunteer_opportunities").insert({title:$("volTitle").value.trim(),description:$("volDescription").value.trim(),category:$("volCategory").value.trim(),event_date:$("volDate").value?new Date($("volDate").value).toISOString():null,location:$("volLocation").value.trim(),active:true});$("volAdminStatus").textContent=r.error?r.error.message:"Volunteer opportunity published.";if(!r.error){e.target.reset();loadVolunteers()}};
+$("loadIdeasBtn").onclick=async()=>{let r=await db.from("idea_suggestions").select("*").order("created_at",{ascending:false}).limit(30);$("ideasAdminList").innerHTML=r.error?esc(r.error.message):r.data.length?r.data.map(x=>`<div class="card" style="margin-top:8px"><b>${esc(x.subject)}</b><div>${esc(x.message)}</div><div class="mini">${esc(x.name||"Anonymous")} • ${esc(x.contact||"")} • ${esc(x.status)}</div></div>`).join(""):"No ideas yet."};
 
-$("loadIdeasBtn").onclick = async () => {
-  let r = await db.from("idea_suggestions").select("*").order("created_at", { ascending: false }).limit(30);
-  $("ideasAdminList").innerHTML = r.error ? esc(r.error.message) : r.data.length ? r.data.map(x => `
-    <div class="card" style="margin-top:8px">
-      <b>${esc(x.subject)}</b>
-      <div>${esc(x.message)}</div>
-      <div class="mini">${esc(x.name || "Anonymous")} • ${esc(x.contact || "")} • ${esc(x.status)}</div>
-    </div>
-  `).join("") : "No ideas yet.";
-};
-
-$("logoutBtn").onclick = async () => {
-  await db.auth.signOut();
-  $("adminPanel").classList.remove("show");
-};
-
-$("refreshBtn").onclick = loadAll;
-
-loadAll();
-loadPolls();
-loadVolunteers();
+$("logoutBtn").onclick=async()=>{await db.auth.signOut();$("adminPanel").classList.remove("show")};$("refreshBtn").onclick=loadAll;loadAll();loadPolls();loadVolunteers();window.addEventListener("load",()=>setTimeout(()=>$("preloader")?.classList.add("done"),900));setTimeout(()=>$("preloader")?.classList.add("done"),2200);
 </script>
-
-</body>
-        </html>
+<div id="schemeFrameModal" class="scheme-frame-modal" role="dialog" aria-modal="true" aria-label="সরকারি প্রকল্পের ওয়েবসাইট">
+ <div class="scheme-frame-panel"><div class="scheme-frame-head"><strong id="schemeFrameTitle">সরকারি প্রকল্প</strong><button type="button" id="schemeFrameClose">বন্ধ করুন ✕</button></div><div class="scheme-frame-note">কিছু সরকারি ওয়েবসাইট নিরাপত্তার কারণে iframe-এ খুলতে নাও পারে। সেক্ষেত্রে “নতুন ট্যাবে খুলুন” ব্যবহার করুন।</div><iframe id="schemeFrame" title="সরকারি প্রকল্পের ওয়েবসাইট" src="about:blank" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe></div>
+</div>
+<script>
+const SCHEME_MASTER = [
+{cat:'মহিলা ও পরিবার কল্যাণ',title:'লক্ষ্মীর ভাণ্ডার',desc:'যোগ্য মহিলাদের আর্থিক সহায়তা। বর্তমান অনুদানের পরিমাণ, যোগ্যতা ও আবেদন-নিয়ম সরকারি বিজ্ঞপ্তিতে যাচাই করুন।',url:'https://wb.gov.in/government-schemes.aspx',phone:'1800-345-5668',verify:'পরিমাণ/শর্ত যাচাই করুন'},
+{cat:'মহিলা ও পরিবার কল্যাণ',title:'মহিলাদের সরকারি বাস পরিষেবা',desc:'রুট ও ভাড়ার নিয়ম পরিবহন দপ্তরের বর্তমান নির্দেশিকা থেকে যাচাই করুন; সর্বত্র বিনামূল্যে যাতায়াত নিশ্চিত ধরে নেবেন না।',url:'https://transport.wb.gov.in/',phone:'1800-345-5223',verify:'সুবিধা রুটভেদে যাচাই করুন'},
+{cat:'মহিলা ও পরিবার কল্যাণ',title:'ছাত্রীদের বৃত্তি ও উচ্চশিক্ষা সহায়তা',desc:'কন্যাশ্রীসহ রাজ্যের সরকারি বৃত্তি ও যোগ্যতা সম্পর্কে সরকারি পোর্টালে দেখুন। “ভগিনী নিবেদিতা স্কিম”-এর নামে দেওয়া অঙ্ক/শর্ত আলাদা করে যাচাই করুন।',url:'https://wb.gov.in/government-schemes.aspx',phone:'',verify:'বিজ্ঞপ্তি যাচাই করুন'},
+{cat:'স্বাস্থ্য ও সামাজিক সুরক্ষা',title:'আয়ুষ্মান ভারত — PM-JAY',desc:'কভারেজ ও যোগ্যতা রাজ্যভিত্তিক বাস্তবায়ন এবং বর্তমান নিয়মের ওপর নির্ভর করে। সুবিধা পাওয়ার আগে সরকারি পোর্টালে যাচাই করুন।',url:'https://beneficiary.nha.gov.in/',phone:'14555',verify:'যোগ্যতা যাচাই করুন'},
+{cat:'বাসস্থান',title:'প্রধানমন্ত্রী আবাস যোজনা — গ্রামীণ (PMAY-G)',desc:'গ্রামীণ যোগ্য পরিবারের আবাসন সহায়তা, তালিকা ও অভিযোগের তথ্য সরকারি পোর্টালে।',url:'https://pmayg.nic.in/',phone:'1800-11-6446',verify:'স্থানীয় বাস্তবায়নকারী দপ্তরে যাচাই করুন'},
+{cat:'বিদ্যুৎ ও পরিবেশ',title:'প্রধানমন্ত্রী সূর্য ঘর: মুফত বিজলি যোজনা',desc:'ছাদে সৌরবিদ্যুৎ স্থাপনে যোগ্যতা ও ভর্তুকির নিয়ম অফিসিয়াল পোর্টালে দেখুন। ৩০০ ইউনিটের সুবিধা শর্তসাপেক্ষ; বিনামূল্যে বিদ্যুৎ নিশ্চিত নয়।',url:'https://pmsuryaghar.gov.in/',phone:'155333',verify:'ভর্তুকি/হেল্পলাইন যাচাই করুন'},
+{cat:'যুবকল্যাণ ও কর্মসংস্থান',title:'পশ্চিমবঙ্গের যুবকল্যাণ ও কর্মসংস্থান প্রকল্প',desc:'যুবশ্রী/অন্যান্য কর্মসংস্থান সহায়তার বর্তমান অবস্থা, আবেদন খোলা আছে কি না এবং অঙ্ক সরকারি বিজ্ঞপ্তিতে যাচাই করুন। “Yuvashakti” সংক্রান্ত প্রদত্ত অঙ্ক নিশ্চিত নয়।',url:'https://employmentbankwb.gov.in/',phone:'',verify:'আবেদন খোলা আছে কি না যাচাই করুন'},
+{cat:'কারিগর ও ক্ষুদ্র উদ্যোগ',title:'প্রধানমন্ত্রী বিশ্বকর্মা যোজনা',desc:'নির্দিষ্ট ঐতিহ্যবাহী পেশার কারিগরদের প্রশিক্ষণ, টুলকিট ও ঋণ-সুবিধা শর্তসাপেক্ষে।',url:'https://pmvishwakarma.gov.in/',phone:'1800-267-7777',verify:'যোগ্যতা ও হেল্পলাইন যাচাই করুন'},
+{cat:'ব্যবসা ও ঋণ',title:'প্রধানমন্ত্রী মুদ্রা যোজনা (PMMY)',desc:'ক্ষুদ্র উদ্যোগের ঋণ; অনুমোদন ব্যাংক/ঋণদাতার যাচাই ও শর্তসাপেক্ষ। ঋণ নিশ্চিত অনুদান নয়।',url:'https://www.mudra.org.in/',phone:'',verify:'ব্যাংকের শর্ত যাচাই করুন'},
+{cat:'কৃষি',title:'পিএম-কিষাণ সম্মান নিধি',desc:'যোগ্য কৃষক পরিবারকে বছরে কেন্দ্রীয় ₹৬,০০০ পর্যন্ত কিস্তিতে দেওয়া হয়। অতিরিক্ত রাজ্য টপ-আপ/মোট ₹৯,০০০ নিশ্চিত ধরে নেবেন না; রাজ্যের সরকারি বিজ্ঞপ্তি যাচাই করুন।',url:'https://pmkisan.gov.in/',phone:'155261',verify:'e-KYC ও কিস্তির অবস্থা দেখুন'},
+{cat:'সামাজিক সুরক্ষা',title:'বার্ধক্য ও প্রতিবন্ধী পেনশন (NSAP)',desc:'পেনশনের অঙ্ক, রাজ্য টপ-আপ ও যোগ্যতা প্রকল্পভেদে আলাদা। প্রতি মাসে ₹২,০০০ নিশ্চিত—এমন দাবি সরকারি বিজ্ঞপ্তি ছাড়া ধরে নেবেন না।',url:'https://nsap.nic.in/',phone:'1800-11-4557',verify:'স্থানীয় দপ্তরে অঙ্ক যাচাই করুন'},
+{cat:'শিক্ষা',title:'পশ্চিমবঙ্গ স্টুডেন্ট ক্রেডিট কার্ড',desc:'যোগ্য শিক্ষার্থীদের শিক্ষা-ঋণ প্রকল্পের বর্তমান নিয়ম, নথি ও আবেদন প্রক্রিয়া দেখুন।',url:'https://wbscc.wb.gov.in/',phone:'',verify:'শর্ত ও সুদের নিয়ম দেখুন'},
+{cat:'নারী ও কন্যাশিক্ষা',title:'কন্যাশ্রী প্রকল্প',desc:'যোগ্য ছাত্রীদের জন্য আর্থিক সহায়তা ও আবেদন/নবীকরণের সরকারি তথ্য।',url:'https://wb.gov.in/government-schemes.aspx',phone:'',verify:'বর্তমান যোগ্যতা যাচাই করুন'},
+{cat:'নারী ও পরিবার কল্যাণ',title:'রূপশ্রী প্রকল্প',desc:'যোগ্য আবেদনকারীদের বিবাহকালীন এককালীন সহায়তার নিয়ম ও আবেদন পদ্ধতি সরকারি পোর্টালে দেখুন।',url:'https://wb.gov.in/government-schemes.aspx',phone:'',verify:'যোগ্যতা যাচাই করুন'},
+{cat:'কৃষি',title:'কৃষকবন্ধু',desc:'কৃষক সহায়তা, নিবন্ধন ও পেমেন্টের তথ্য পশ্চিমবঙ্গের সরকারি পোর্টালে।',url:'https://krishakbandhu.wb.gov.in/',phone:'',verify:'বর্তমান নিয়ম যাচাই করুন'},
+{cat:'সকল নাগরিক',title:'দুয়ারে সরকার',desc:'সরকারি পরিষেবা ও প্রকল্পের ক্যাম্প, আবেদন ও স্ট্যাটাসের তথ্য।',url:'https://ds.wb.gov.in/dws7/Portal_New_Default.aspx',phone:'',verify:'বর্তমান ক্যাম্পের তারিখ দেখুন'},
+{cat:'সকল নাগরিক',title:'সরকারি প্রকল্প খুঁজুন — myScheme',desc:'নিজের যোগ্যতা অনুযায়ী কেন্দ্রীয় ও রাজ্য প্রকল্প খুঁজে দেখুন। আবেদন করার আগে সংশ্লিষ্ট দপ্তরের শর্ত যাচাই করুন।',url:'https://www.myscheme.gov.in/',phone:'',verify:'অফিসিয়াল স্কিম পেজে যাচাই করুন'}
+];
+function renderSchemeMaster(){const root=document.getElementById('schemesGrid');if(!root)return;root.innerHTML=SCHEME_MASTER.map((x,i)=>`<article class="card scheme-card"><span class="scheme-tag">${x.cat}</span><h3>${x.title}</h3><p>${x.desc}</p><div class="scheme-disclaimer">${x.verify}</div><div class="scheme-actions"><button type="button" class="btn primary scheme-apply" data-scheme="${i}">Apply Online</button>${x.phone?`<a class="btn info-link" href="tel:${x.phone.replace(/[^+\d]/g,'')}">📞 Call Helpline</a>`:''}<a class="btn" href="${x.url}" target="_blank" rel="noopener noreferrer">নতুন ট্যাবে খুলুন ↗</a></div></article>`).join('');}
+document.addEventListener('click',e=>{const b=e.target.closest('.scheme-apply');if(b){const x=SCHEME_MASTER[Number(b.dataset.scheme)];if(!x)return;const modal=document.getElementById('schemeFrameModal');document.getElementById('schemeFrameTitle').textContent=x.title;document.getElementById('schemeFrame').src=x.url;modal.classList.add('open');document.body.style.overflow='hidden';}});
+function closeSchemeFrame(){document.getElementById('schemeFrameModal').classList.remove('open');document.getElementById('schemeFrame').src='about:blank';document.body.style.overflow='';}
+document.getElementById('schemeFrameClose').addEventListener('click',closeSchemeFrame);document.getElementById('schemeFrameModal').addEventListener('click',e=>{if(e.target.id==='schemeFrameModal')closeSchemeFrame();});document.addEventListener('keydown',e=>{if(e.key==='Escape')closeSchemeFrame();});
+// Render now and again after the original Supabase loader finishes.
+renderSchemeMaster();
+</script>
+</body></html>
